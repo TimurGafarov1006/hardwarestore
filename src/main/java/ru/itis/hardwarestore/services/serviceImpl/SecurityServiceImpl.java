@@ -1,6 +1,7 @@
 package ru.itis.hardwarestore.services.serviceImpl;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import ru.itis.hardwarestore.exceptions.LoginValidateException;
 import ru.itis.hardwarestore.exceptions.RegistrationValidateException;
 import ru.itis.hardwarestore.models.User;
 import ru.itis.hardwarestore.models.UserRole;
@@ -13,6 +14,7 @@ import ru.itis.hardwarestore.utils.PropertiesUtil;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -76,6 +78,36 @@ public class SecurityServiceImpl implements SecurityService {
 
         return sessionId;
     }
+
+    @Override
+    public String loginUser(String login, String password) {
+        Optional<User> userOptional = login.contains("@")
+                ? userRepository.findByEmail(login)
+                : userRepository.findByPhone(PhoneUtils.normalizePhone(login));
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            String salt = user.getSalt();
+            String userPasswordHash = user.getPasswordHash();
+
+            if (DigestUtils.sha256Hex(password + salt).equals(userPasswordHash)) {
+                String sessionId = UUID.randomUUID().toString();
+                sessionRepository.addSession(
+                        sessionId,
+                        user.getId(),
+                        LocalDateTime.now().plus(sessionDuration)
+                );
+
+                return sessionId;
+            } else {
+                throw new LoginValidateException("Incorrect email or password");
+            }
+        }
+
+        throw new LoginValidateException("Incorrect email or password");
+    }
+
 
     private void validateUser(String firstName, String lastName, String password,
                               String normalizedPhone, String email)
