@@ -16,7 +16,7 @@ import static ru.itis.hardwarestore.repositories.queries.UserQueries.*;
 
 
 public class UserRepositoryJdbc implements UserRepository {
-    private Properties properties;
+    private final Properties properties;
     private final String url;
 
     public UserRepositoryJdbc() {
