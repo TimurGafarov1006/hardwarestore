@@ -7,9 +7,8 @@ import ru.itis.hardwarestore.models.UserRole;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.SessionRepository;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.UserRepository;
 import ru.itis.hardwarestore.services.serviceInterfaces.SecurityService;
+import ru.itis.hardwarestore.util.PropertiesUtil;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,14 +24,7 @@ public class SecurityServiceImpl implements SecurityService {
         this.userRepository = userRepository;
         this.sessionRepository = sessionRepository;
 
-        Properties properties = new Properties();
-        InputStream inputStream = getClass().getResourceAsStream("/application.properties");
-        try {
-            properties.load(inputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        Properties properties = PropertiesUtil.getProperties();
         sessionDuration = Duration.ofMinutes(Integer.parseInt(properties.getProperty("sessionDuration")));
     }
 

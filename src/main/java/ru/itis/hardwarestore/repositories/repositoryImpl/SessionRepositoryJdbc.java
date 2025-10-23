@@ -2,9 +2,8 @@ package ru.itis.hardwarestore.repositories.repositoryImpl;
 
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.SessionRepository;
 import ru.itis.hardwarestore.models.Session;
+import ru.itis.hardwarestore.util.PropertiesUtil;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.Properties;
@@ -22,15 +21,7 @@ public class SessionRepositoryJdbc implements SessionRepository {
             throw new RuntimeException(e);
         }
 
-        properties = new Properties();
-        InputStream inputStream = getClass().getResourceAsStream("/application.properties");
-
-        try {
-            properties.load(inputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        properties = PropertiesUtil.getProperties();
         url = properties.getProperty("url");
     }
 
