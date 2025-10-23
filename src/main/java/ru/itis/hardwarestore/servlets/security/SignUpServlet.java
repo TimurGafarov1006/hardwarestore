@@ -36,7 +36,8 @@ public class SignUpServlet extends HttpServlet {
         String password = req.getParameter("password");
         String phone = req.getParameter("phone");
         String email = req.getParameter("email");
-        LocalDate birthday = LocalDate.parse(req.getParameter("birthday"));
+        LocalDate birthday = (req.getParameter("birthday") != null && !req.getParameter("birthday").isBlank())
+                ? LocalDate.parse(req.getParameter("birthday")) : null;
 
         String sessionId = null;
 
@@ -44,7 +45,7 @@ public class SignUpServlet extends HttpServlet {
             sessionId = securityService.registerUser(firstName, lastName, password, phone, email, birthday);
         } catch (RegistrationValidateException e) {
             //TODO сделать живую валидацию через js
-            req.setAttribute("error", e);
+            req.setAttribute("error", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/security/registration.jsp").forward(req, resp);
         }
 
