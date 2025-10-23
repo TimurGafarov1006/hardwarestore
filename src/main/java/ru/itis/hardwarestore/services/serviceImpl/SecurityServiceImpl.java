@@ -14,11 +14,22 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class SecurityServiceImpl implements SecurityService {
     private final UserRepository userRepository;
     private final SessionRepository sessionRepository;
     private final Duration sessionDuration;
+
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^(?=.*[A-Z]).{8,}$");
+
+    private static final Pattern PHONE_PATTERN =
+            Pattern.compile("^(\\+7|8)?\\s*\\(?\\d{3}\\)?[\\s\\-]?\\d{3}[\\s\\-]?\\d{2}[\\s\\-]?\\d{2}$");
+
+    private static final Pattern EMAIL_PATTERN =
+            Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+
 
     public SecurityServiceImpl(UserRepository userRepository, SessionRepository sessionRepository) {
         this.userRepository = userRepository;
@@ -73,7 +84,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     private void validateNameAndPassword(String firstName, String lastName, String password) {
         if (firstName.length() > 2 && lastName.length() > 2) {
-            if (!password.matches("^(?=.*[A-Z]).{8,}$")) {
+            if (!PASSWORD_PATTERN.matcher(password).matches()) {
                 throw new RegistrationValidateException("Incorrect password format");
             }
         } else {
@@ -88,7 +99,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     private void validatePhone(String phone) {
         if (userRepository.findByPhone(phone).isEmpty()) {
-            if (!phone.matches("^(\\+7|8)?\\s*\\(?\\d{3}\\)?[\\s\\-]?\\d{3}[\\s\\-]?\\d{2}[\\s\\-]?\\d{2}$")) {
+            if (!PHONE_PATTERN.matcher(phone).matches()) {
                 throw new RegistrationValidateException("Incorrect phone number format");
             }
         } else {
@@ -99,7 +110,7 @@ public class SecurityServiceImpl implements SecurityService {
 
     private void validateEmail(String email) {
         if (userRepository.findByEmail(email).isEmpty()) {
-            if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            if (!EMAIL_PATTERN.matcher(email).matches()) {
                 throw new RegistrationValidateException("Incorrect email format");
             }
         } else {
