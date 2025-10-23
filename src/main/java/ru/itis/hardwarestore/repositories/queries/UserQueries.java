@@ -37,4 +37,9 @@ public class UserQueries {
             DELETE FROM users
             WHERE id = ?
             """;
+    public static final String FIND_BY_PHONE_SQL = """
+            SELECT *
+            FROM users
+            WHERE phone = ?
+            """;
 }

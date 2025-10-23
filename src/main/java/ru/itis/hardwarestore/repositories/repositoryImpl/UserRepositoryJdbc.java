@@ -193,7 +193,7 @@ public class UserRepositoryJdbc implements UserRepository {
     @Override
     public Optional<User> findByPhone(String phone) {
         try (Connection connection = DriverManager.getConnection(url, properties);
-             PreparedStatement statement = connection.prepareStatement(FIND_BY_EMAIL_SQL))
+             PreparedStatement statement = connection.prepareStatement(FIND_BY_PHONE_SQL))
         {
             statement.setString(1, phone);
 
