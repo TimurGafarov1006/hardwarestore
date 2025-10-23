@@ -7,7 +7,8 @@ import ru.itis.hardwarestore.models.UserRole;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.SessionRepository;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.UserRepository;
 import ru.itis.hardwarestore.services.serviceInterfaces.SecurityService;
-import ru.itis.hardwarestore.util.PropertiesUtil;
+import ru.itis.hardwarestore.utils.PhoneUtils;
+import ru.itis.hardwarestore.utils.PropertiesUtil;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -43,7 +44,9 @@ public class SecurityServiceImpl implements SecurityService {
     public String registerUser(String firstName, String lastName, String password, String phone,
                                String email, LocalDate birthday)
     {
-        validateUser(firstName, lastName, password, phone, email);
+        String normalizedPhone = PhoneUtils.normalizePhone(phone);
+
+        validateUser(firstName, lastName, password, normalizedPhone, email);
 
         String userId = UUID.randomUUID().toString();
         String salt = UUID.randomUUID().toString();
@@ -56,7 +59,7 @@ public class SecurityServiceImpl implements SecurityService {
                 lastName,
                 passwordHash,
                 salt,
-                phone,
+                normalizedPhone,
                 email,
                 birthday,
                 LocalDateTime.now(),
@@ -75,10 +78,10 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     private void validateUser(String firstName, String lastName, String password,
-                              String phone, String email)
+                              String normalizedPhone, String email)
     {
         validateNameAndPassword(firstName, lastName, password);
-        validatePhone(phone);
+        validatePhone(normalizedPhone);
         validateEmail(email);
     }
 
@@ -97,15 +100,14 @@ public class SecurityServiceImpl implements SecurityService {
         }
     }
 
-    private void validatePhone(String phone) {
-        if (userRepository.findByPhone(phone).isEmpty()) {
-            if (!PHONE_PATTERN.matcher(phone).matches()) {
+    private void validatePhone(String normalizedPhone) {
+        if (userRepository.findByPhone(normalizedPhone).isEmpty()) {
+            if (!PHONE_PATTERN.matcher(normalizedPhone).matches()) {
                 throw new RegistrationValidateException("Incorrect phone number format");
             }
         } else {
             throw new RegistrationValidateException("The phone is busy");
         }
-
     }
 
     private void validateEmail(String email) {

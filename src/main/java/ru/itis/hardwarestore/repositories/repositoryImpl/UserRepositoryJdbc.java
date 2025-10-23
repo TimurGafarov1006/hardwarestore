@@ -3,7 +3,7 @@ package ru.itis.hardwarestore.repositories.repositoryImpl;
 import ru.itis.hardwarestore.models.User;
 import ru.itis.hardwarestore.models.UserRole;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.UserRepository;
-import ru.itis.hardwarestore.util.PropertiesUtil;
+import ru.itis.hardwarestore.utils.PropertiesUtil;
 
 import java.sql.*;
 import java.util.ArrayList;

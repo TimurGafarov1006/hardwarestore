@@ -2,7 +2,7 @@ package ru.itis.hardwarestore.repositories.repositoryImpl;
 
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.SessionRepository;
 import ru.itis.hardwarestore.models.Session;
-import ru.itis.hardwarestore.util.PropertiesUtil;
+import ru.itis.hardwarestore.utils.PropertiesUtil;
 
 import java.sql.*;
 import java.time.LocalDateTime;

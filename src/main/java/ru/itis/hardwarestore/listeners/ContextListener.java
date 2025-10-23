@@ -9,7 +9,7 @@ import ru.itis.hardwarestore.repositories.repositoryInterfaces.SessionRepository
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.UserRepository;
 import ru.itis.hardwarestore.services.serviceImpl.SecurityServiceImpl;
 import ru.itis.hardwarestore.services.serviceInterfaces.SecurityService;
-import ru.itis.hardwarestore.util.PropertiesUtil;
+import ru.itis.hardwarestore.utils.PropertiesUtil;
 
 import java.time.Duration;
 import java.util.Properties;

@@ -1,4 +1,4 @@
-package ru.itis.hardwarestore.util;
+package ru.itis.hardwarestore.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
