@@ -2,12 +2,12 @@ package ru.itis.hardwarestore.servlets.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.itis.hardwarestore.exceptions.RegistrationValidateException;
 import ru.itis.hardwarestore.services.serviceInterfaces.SecurityService;
+import ru.itis.hardwarestore.utils.CookieUtils;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -49,16 +49,7 @@ public class SignUpServlet extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/views/security/registration.jsp").forward(req, resp);
         }
 
-        createCookie(req, resp, sessionId);
+        CookieUtils.createCookie(req, resp, sessionId, sessionDuration);
         resp.sendRedirect(req.getContextPath() + "/"); //TODO сделать главную страницу сайта
-    }
-
-    private void createCookie(HttpServletRequest req, HttpServletResponse resp, String sessionId) {
-        Cookie cookie = new Cookie("session_id", sessionId);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false);
-        cookie.setPath("/");
-        cookie.setMaxAge(sessionDuration.toMinutesPart() * 60);
-        resp.addCookie(cookie);
     }
 }
