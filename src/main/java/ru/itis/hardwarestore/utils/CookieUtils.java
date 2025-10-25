@@ -15,4 +15,13 @@ public class CookieUtils {
         cookie.setMaxAge(sessionDuration.toMinutesPart() * 60);
         resp.addCookie(cookie);
     }
+
+    public static void clearAuthCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie("session_id", null);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+    }
 }
