@@ -9,9 +9,9 @@
         <button type="submit">Выйти из аккаунта</button>
     </form>
 
-    <a href="${pageContext.request.contextPath}/update-user">Изменить личные данные</a>
-    <a href="${pageContext.request.contextPath}/history">История заказов</a>
-    <a href="${pageContext.request.contextPath}/discount-card">Скидочная карта</a>
+    <a href="${pageContext.request.contextPath}/cabinet/update">Изменить личные данные</a>
+    <a href="${pageContext.request.contextPath}/cabinet/history">История заказов</a>
+    <a href="${pageContext.request.contextPath}/cabinet/discount-card">Скидочная карта</a>
 
     <p>${user.firstName}</p>
     <p>${user.lastName}</p>
