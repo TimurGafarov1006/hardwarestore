@@ -8,7 +8,9 @@ import ru.itis.hardwarestore.repositories.repositoryImpl.UserRepositoryJdbc;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.SessionRepository;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.UserRepository;
 import ru.itis.hardwarestore.services.serviceImpl.AuthServiceImpl;
+import ru.itis.hardwarestore.services.serviceImpl.UserServiceImpl;
 import ru.itis.hardwarestore.services.serviceInterfaces.AuthService;
+import ru.itis.hardwarestore.services.serviceInterfaces.UserService;
 import ru.itis.hardwarestore.utils.PropertiesUtil;
 
 import java.time.Duration;
@@ -25,9 +27,11 @@ public class ContextListener implements ServletContextListener {
         SessionRepository sessionRepository = new SessionRepositoryJdbc();
 
         AuthService authService = new AuthServiceImpl(userRepository, sessionRepository);
+        UserService userService = new UserServiceImpl(userRepository);
 
         sce.getServletContext().setAttribute("sessionRepository", sessionRepository);
         sce.getServletContext().setAttribute("sessionDuration", sessionDuration);
+        sce.getServletContext().setAttribute("userService", userService);
         sce.getServletContext().setAttribute("authService", authService);
     }
 }

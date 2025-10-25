@@ -32,7 +32,7 @@ public class AuthenticationFilter extends HttpFilter {
         boolean isAuthenticated = checkAuthentication(req, res);
 
         if (isAuthenticated && isAuthRestricted) {
-            res.sendRedirect(contextPath + "/profile");
+            res.sendRedirect(contextPath + "/cabinet");
             return;
         }
 

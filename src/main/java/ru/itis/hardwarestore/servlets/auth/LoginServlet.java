@@ -43,6 +43,6 @@ public class LoginServlet extends HttpServlet {
         }
 
         CookieUtils.createCookie(req, resp, sessionId, sessionDuration);
-        resp.sendRedirect(req.getContextPath() + "/"); //TODO создать главную страницу
+        resp.sendRedirect(req.getContextPath() + "/cabinet"); //TODO создать главную страницу
     }
 }
