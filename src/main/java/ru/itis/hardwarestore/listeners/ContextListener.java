@@ -26,6 +26,7 @@ public class ContextListener implements ServletContextListener {
 
         SecurityService securityService = new SecurityServiceImpl(userRepository, sessionRepository);
 
+        sce.getServletContext().setAttribute("sessionRepository", sessionRepository);
         sce.getServletContext().setAttribute("sessionDuration", sessionDuration);
         sce.getServletContext().setAttribute("securityService", securityService);
     }
