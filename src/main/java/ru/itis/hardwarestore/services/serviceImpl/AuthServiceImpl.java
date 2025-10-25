@@ -7,7 +7,7 @@ import ru.itis.hardwarestore.models.User;
 import ru.itis.hardwarestore.models.UserRole;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.SessionRepository;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.UserRepository;
-import ru.itis.hardwarestore.services.serviceInterfaces.SecurityService;
+import ru.itis.hardwarestore.services.serviceInterfaces.AuthService;
 import ru.itis.hardwarestore.utils.PhoneUtils;
 import ru.itis.hardwarestore.utils.PropertiesUtil;
 
@@ -19,7 +19,7 @@ import java.util.Properties;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-public class SecurityServiceImpl implements SecurityService {
+public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final SessionRepository sessionRepository;
     private final Duration sessionDuration;
@@ -34,7 +34,7 @@ public class SecurityServiceImpl implements SecurityService {
             Pattern.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
 
 
-    public SecurityServiceImpl(UserRepository userRepository, SessionRepository sessionRepository) {
+    public AuthServiceImpl(UserRepository userRepository, SessionRepository sessionRepository) {
         this.userRepository = userRepository;
         this.sessionRepository = sessionRepository;
 
