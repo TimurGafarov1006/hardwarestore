@@ -134,7 +134,7 @@ public class UserRepositoryJdbc implements UserRepository {
                         resultSet.getString("salt"),
                         resultSet.getString("phone"),
                         resultSet.getString("email"),
-                        resultSet.getDate("birthday").toLocalDate(),
+                        resultSet.getDate("birthday") != null ? resultSet.getDate("birthday").toLocalDate() : null,
                         resultSet.getTimestamp("created_at").toLocalDateTime(),
                         resultSet.getTimestamp("updated_at").toLocalDateTime()
                 );
@@ -168,7 +168,7 @@ public class UserRepositoryJdbc implements UserRepository {
                         resultSet.getString("salt"),
                         resultSet.getString("phone"),
                         resultSet.getString("email"),
-                        resultSet.getDate("birthday").toLocalDate(),
+                        resultSet.getDate("birthday") != null ? resultSet.getDate("birthday").toLocalDate() : null,
                         resultSet.getTimestamp("created_at").toLocalDateTime(),
                         resultSet.getTimestamp("updated_at").toLocalDateTime()
                 );
@@ -202,7 +202,7 @@ public class UserRepositoryJdbc implements UserRepository {
                         resultSet.getString("salt"),
                         resultSet.getString("phone"),
                         resultSet.getString("email"),
-                        resultSet.getDate("birthday").toLocalDate(),
+                        resultSet.getDate("birthday") != null ? resultSet.getDate("birthday").toLocalDate() : null,
                         resultSet.getTimestamp("created_at").toLocalDateTime(),
                         resultSet.getTimestamp("updated_at").toLocalDateTime()
                 );
