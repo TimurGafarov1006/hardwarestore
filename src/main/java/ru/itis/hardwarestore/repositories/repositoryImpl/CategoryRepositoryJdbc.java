@@ -144,7 +144,7 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
                 Category category = new Category(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
-                        resultSet.getInt("parent_id"),
+                        resultSet.getInt("parent_id") != 0 ? resultSet.getInt("parent_id") : null,
                         resultSet.getString("slug"),
                         resultSet.getTimestamp("created_at").toLocalDateTime(),
                         resultSet.getTimestamp("updated_at").toLocalDateTime()
@@ -173,7 +173,7 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
                 Category category = new Category(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
-                        resultSet.getInt("parent_id"),
+                        resultSet.getInt("parent_id") != 0 ? resultSet.getInt("parent_id") : null,
                         resultSet.getString("slug"),
                         resultSet.getTimestamp("created_at").toLocalDateTime(),
                         resultSet.getTimestamp("updated_at").toLocalDateTime()
