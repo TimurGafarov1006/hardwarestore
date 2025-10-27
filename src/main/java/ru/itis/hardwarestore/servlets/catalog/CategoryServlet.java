@@ -30,9 +30,8 @@ public class CategoryServlet extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/views/catalog/categories.jsp").forward(req, resp);
         }
 
-        String[] parts = pathInfo.substring(1).split("/");
-        String category = parts[0];
-        Integer categoryId = categoryService.getCategoryBySlug(category).getId();
+        String categorySlug = pathInfo.substring(1).split("/")[0];
+        Integer categoryId = categoryService.getCategoryBySlug(categorySlug).getId();
 
         if (categoryService.getChildrenCategories(categoryId).isEmpty()) {
             req.setAttribute("products", productService.getCategoryProducts(categoryId));
