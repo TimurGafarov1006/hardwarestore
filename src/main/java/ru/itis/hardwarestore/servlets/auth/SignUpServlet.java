@@ -50,6 +50,6 @@ public class SignUpServlet extends HttpServlet {
         }
 
         CookieUtils.createCookie(req, resp, sessionId, sessionDuration);
-        resp.sendRedirect(req.getContextPath() + "/cabinet");
+        resp.sendRedirect(req.getContextPath() + "/catalog");
     }
 }
