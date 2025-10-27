@@ -1,0 +1,45 @@
+package ru.itis.hardwarestore.servlets.catalog;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import ru.itis.hardwarestore.services.serviceInterfaces.CategoryService;
+import ru.itis.hardwarestore.services.serviceInterfaces.ProductService;
+
+import java.io.IOException;
+
+@WebServlet("/catalog/*")
+public class CategoryServlet extends HttpServlet {
+    private CategoryService categoryService;
+    private ProductService productService;
+
+    @Override
+    public void init() throws ServletException {
+        this.categoryService = (CategoryService) getServletContext().getAttribute("categoryService");
+        this.productService = (ProductService) getServletContext().getAttribute("productService");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String pathInfo = req.getPathInfo();
+
+        if (pathInfo == null || pathInfo.equals("/") || pathInfo.isEmpty()) {
+            req.setAttribute("categories", categoryService.getChildrenCategories(null));
+            req.getRequestDispatcher("/WEB-INF/views/catalog/categories.jsp").forward(req, resp);
+        }
+
+        String[] parts = pathInfo.substring(1).split("/");
+        String category = parts[0];
+        Integer categoryId = categoryService.getCategoryBySlug(category).getId();
+
+        if (categoryService.getChildrenCategories(categoryId).isEmpty()) {
+            req.setAttribute("products", productService.getCategoryProducts(categoryId));
+            req.getRequestDispatcher("/WEB-INF/views/catalog/products.jsp").forward(req, resp);
+        } else {
+            req.setAttribute("categories", categoryService.getChildrenCategories(categoryId));
+            req.getRequestDispatcher("/WEB-INF/views/catalog/categories.jsp").forward(req, resp);
+        }
+    }
+}
