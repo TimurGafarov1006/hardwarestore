@@ -17,5 +17,7 @@
     <p>${user.lastName}</p>
     <p>${user.email}</p>
     <p>${user.phone}</p>
+
+    <a href="${pageContext.request.contextPath}/catalog">Каталог</a>
 </body>
 </html>
