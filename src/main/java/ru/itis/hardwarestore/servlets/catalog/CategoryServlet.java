@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ru.itis.hardwarestore.models.Category;
 import ru.itis.hardwarestore.services.serviceInterfaces.CategoryService;
 import ru.itis.hardwarestore.services.serviceInterfaces.ProductService;
 
@@ -31,13 +32,18 @@ public class CategoryServlet extends HttpServlet {
         }
 
         String categorySlug = pathInfo.substring(1).split("/")[0];
-        Integer categoryId = categoryService.getCategoryBySlug(categorySlug).getId();
+        Category category = categoryService.getCategoryBySlug(categorySlug);
 
-        if (categoryService.getChildrenCategories(categoryId).isEmpty()) {
-            req.setAttribute("products", productService.getCategoryProducts(categoryId));
+        if (category.getParentId() != null) {
+            Category prevCategory = categoryService.getCategory(category.getParentId());
+            req.setAttribute("prevCategory", prevCategory);
+        }
+
+        if (categoryService.getChildrenCategories(category.getId()).isEmpty()) {
+            req.setAttribute("products", productService.getCategoryProducts(category.getId()));
             req.getRequestDispatcher("/WEB-INF/views/catalog/products.jsp").forward(req, resp);
         } else {
-            req.setAttribute("categories", categoryService.getChildrenCategories(categoryId));
+            req.setAttribute("categories", categoryService.getChildrenCategories(category.getId()));
             req.getRequestDispatcher("/WEB-INF/views/catalog/categories.jsp").forward(req, resp);
         }
     }

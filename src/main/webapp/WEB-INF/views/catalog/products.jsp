@@ -5,10 +5,10 @@
     <title>Title</title>
 </head>
 <body>
+    <a href="${pageContext.request.contextPath}/catalog/${prevCategory.slug}">${prevCategory.name}</a>
+
     <c:forEach var="product" items="${products}">
       <a href="${pageContext.request.contextPath}/products/${product.slug}">${product.name}</a>
-      <p>${product.description}</p>
-      <p>${product.pricePerUnit}</p>
       <img src="${pageContext.request.contextPath}${product.imageUrl}" />
     </c:forEach>
 

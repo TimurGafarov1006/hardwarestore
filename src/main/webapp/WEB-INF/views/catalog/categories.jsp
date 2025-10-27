@@ -5,6 +5,13 @@
     <title>Title</title>
 </head>
 <body>
+    <c:if test="${prevCategory!=null}">
+        <a href="${pageContext.request.contextPath}/catalog/${prevCategory.slug}">${prevCategory.name}</a>
+    </c:if>
+    <c:if test="${prevCategory==null}">
+        <a href="${pageContext.request.contextPath}/catalog">Каталог</a>
+    </c:if>
+
     <c:forEach var="category" items="${categories}">
         <p>
             <a href="${pageContext.request.contextPath}/catalog/${category.slug}">${category}</a>
