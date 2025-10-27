@@ -3,7 +3,7 @@ package ru.itis.hardwarestore.services.serviceImpl;
 import org.apache.commons.codec.digest.DigestUtils;
 import ru.itis.hardwarestore.exceptions.LoginValidateException;
 import ru.itis.hardwarestore.models.User;
-import ru.itis.hardwarestore.models.UserRole;
+import ru.itis.hardwarestore.models.enums.UserRole;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.SessionRepository;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.UserRepository;
 import ru.itis.hardwarestore.services.serviceInterfaces.AuthService;

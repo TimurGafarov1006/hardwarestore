@@ -4,6 +4,7 @@ package ru.itis.hardwarestore.models;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
+import ru.itis.hardwarestore.models.enums.UserRole;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
