@@ -4,15 +4,17 @@ import lombok.Getter;
 
 @Getter
 public enum CardType {
-    SILVER(1, 5),
-    GOLDEN(2, 7),
-    PLATINUM(3, 10);
+    SILVER(1, "Серебрянная", 5),
+    GOLDEN(2, "Золотая", 7),
+    PLATINUM(3, "Платиновая", 10);
 
     private final int id;
+    private final String name;
     private final int discountPercent;
 
-    CardType(int id, int discountPercent) {
+    CardType(int id, String name, int discountPercent) {
         this.id = id;
+        this.name = name;
         this.discountPercent = discountPercent;
     }
 
