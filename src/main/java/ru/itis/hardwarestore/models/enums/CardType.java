@@ -1,8 +1,10 @@
 package ru.itis.hardwarestore.models.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum CardType {
     SILVER(1, "Серебрянная", 5),
     GOLDEN(2, "Золотая", 7),
@@ -12,11 +14,6 @@ public enum CardType {
     private final String name;
     private final int discountPercent;
 
-    CardType(int id, String name, int discountPercent) {
-        this.id = id;
-        this.name = name;
-        this.discountPercent = discountPercent;
-    }
 
     public static CardType fromId(int id) {
         if (id == 1) return SILVER;
