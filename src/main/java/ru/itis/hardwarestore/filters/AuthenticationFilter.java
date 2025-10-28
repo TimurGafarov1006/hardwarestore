@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.itis.hardwarestore.models.Session;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.SessionRepository;
+import ru.itis.hardwarestore.utils.CookieUtils;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -66,22 +67,13 @@ public class AuthenticationFilter extends HttpFilter {
                     return true;
                 } else {
                     sessionRepository.deleteSessionById(sessionId);
-                    clearAuthCookie(res);
+                    CookieUtils.clearAuthCookie(res);
                 }
             } catch (IllegalArgumentException e) {
-                clearAuthCookie(res);
+                CookieUtils.clearAuthCookie(res);
             }
         }
         return false;
-    }
-
-    private void clearAuthCookie(HttpServletResponse response) {
-        Cookie cookie = new Cookie("session_id", null);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false);
-        cookie.setPath("/");
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
     }
 
     private boolean isPublicResource(String path) {
