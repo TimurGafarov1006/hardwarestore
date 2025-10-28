@@ -2,13 +2,15 @@ package ru.itis.hardwarestore.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 public class CartElement {
-    private int id;
+    private Integer id;
     private String userId;
     private int productId;
     private int quantity;

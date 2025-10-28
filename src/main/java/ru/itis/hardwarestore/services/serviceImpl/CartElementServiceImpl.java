@@ -16,14 +16,17 @@ public class CartElementServiceImpl implements CartElementService {
     }
 
     @Override
-    public CartElement getCartElement(int id) {
-        Optional<CartElement> cartElement = cartElementRepository.findById(id);
+    public CartElement getCartElement(Integer id) {
+        if (id != null) {
+            Optional<CartElement> cartElement = cartElementRepository.findById(id);
 
-        if (cartElement.isPresent()) {
-            return cartElement.get();
-        } else {
-            throw new CartException("Cart element not found");
+            if (cartElement.isPresent()) {
+                return cartElement.get();
+            } else {
+                throw new CartException("Cart element not found");
+            }
         }
+        throw new CartException("Cart element not found");
     }
 
     @Override
@@ -33,7 +36,7 @@ public class CartElementServiceImpl implements CartElementService {
 
     @Override
     public void addOrUpdate(CartElement cartElement) {
-        if (cartElementRepository.findById(cartElement.getId()).isPresent()) {
+        if (cartElement.getId() != null && cartElementRepository.findById(cartElement.getId()).isPresent()) {
             cartElementRepository.update(cartElement);
         } else {
             cartElementRepository.save(cartElement);
