@@ -16,7 +16,6 @@ import java.io.IOException;
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
     private CartElementService cartElementService;
-    private static ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void init() throws ServletException {
@@ -25,20 +24,14 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String userId = (String) req.getAttribute("userId");
+        req.setAttribute("cart", cartElementService.getCartContains(userId));
         req.getRequestDispatcher("/WEB-INF/views/user/cart.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        StringBuilder jsonBuffer = new StringBuilder();
-        String line;
-        try (BufferedReader reader = req.getReader()) {
-            while ((line = reader.readLine()) != null) {
-                jsonBuffer.append(line);
-            }
-        }
-
-        String json = jsonBuffer.toString();
+        String json = readJson(req);
         CartElement cartElement = JacksonUtils.jsonToCartElement(json);
 
         cartElementService.addOrUpdate(cartElement);
@@ -46,6 +39,22 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String json = readJson(req);
+        CartElement cartElement = JacksonUtils.jsonToCartElement(json);
+        cartElementService.deleteProduct(cartElement);
+    }
 
+    private String readJson(HttpServletRequest req) {
+        StringBuilder jsonBuffer = new StringBuilder();
+        String line;
+        try (BufferedReader reader = req.getReader()) {
+            while ((line = reader.readLine()) != null) {
+                jsonBuffer.append(line);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return jsonBuffer.toString();
     }
 }
