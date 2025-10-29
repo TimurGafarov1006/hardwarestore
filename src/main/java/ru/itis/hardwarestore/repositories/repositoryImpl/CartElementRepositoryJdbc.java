@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
-import static ru.itis.hardwarestore.repositories.queries.CartElementsQueries.SAVE_SQL;
-import static ru.itis.hardwarestore.repositories.queries.CategoryQueries.*;
+import static ru.itis.hardwarestore.repositories.queries.CartElementsQueries.*;
 
 public class CartElementRepositoryJdbc implements CartElementRepository {
     private final Properties properties;
@@ -100,7 +99,7 @@ public class CartElementRepositoryJdbc implements CartElementRepository {
         List<CartElement> cartElements = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(url, properties);
-             PreparedStatement statement = connection.prepareStatement(FIND_ALL_SQL))
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_USER_ID_SQL))
         {
             statement.setString(1, userId);
             ResultSet resultSet = statement.executeQuery();
