@@ -1,11 +1,16 @@
 package ru.itis.hardwarestore.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.itis.hardwarestore.models.CartElement;
 
 public class JacksonUtils {
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    static {
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
 
     public static String cartElementToJson(CartElement cartElement) {
         try {
@@ -19,7 +24,7 @@ public class JacksonUtils {
         try {
             return objectMapper.readValue(json, CartElement.class);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Ошибка десериализации JSON в CartElement. JSON: " + json, e);
         }
     }
 }
