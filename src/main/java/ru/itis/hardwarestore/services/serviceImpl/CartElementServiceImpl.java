@@ -63,4 +63,15 @@ public class CartElementServiceImpl implements CartElementService {
         int cartElementId = cartElement.getId();
         cartElementRepository.delete(cartElementId);
     }
+
+    @Override
+    public boolean isProductInCart(String userId, int productId) {
+        Optional<CartElement> cartElementOptional = cartElementRepository.findByUserAndProductId(userId, productId);
+
+        if (cartElementOptional.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
