@@ -18,7 +18,7 @@
     </form>
 
     <a href="${pageContext.request.contextPath}/cabinet">Личные данные</a>
-    <a href="${pageContext.request.contextPath}/cabinet/history">История заказов</a>
+    <a href="${pageContext.request.contextPath}/cabinet/orders">История заказов</a>
     <a href="${pageContext.request.contextPath}/cabinet/discount-card">Скидочная карта</a>
 
     <form method="POST" action="${pageContext.request.contextPath}/cabinet/update">
