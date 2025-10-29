@@ -47,7 +47,8 @@ public class OrderServiceImpl implements OrderService {
         double totalAmount = 0;
 
         List<OrderList> orderLists = new ArrayList<>();
-        for (CartElement cartElement: cartElementService.getUserCart(userId)) {
+        List<CartElement> cartElements = cartElementService.getUserCart(userId);
+        for (CartElement cartElement: cartElements) {
             Product product = productService.getProduct(cartElement.getProductId());
             amountBeforeDiscount += cartElement.getQuantity() * product.getPricePerUnit();
 
@@ -71,6 +72,11 @@ public class OrderServiceImpl implements OrderService {
         order.setId(orderId);
 
         orderRepository.update(order);
+
+        // удаляю в конце, чтобы исключить вариант когда произойдёт ошибка в оформлении заказа и корзина стерется
+        for (CartElement cartElement : cartElements) {
+            cartElementService.deleteProduct(cartElement);
+        }
     }
 
     @Override
