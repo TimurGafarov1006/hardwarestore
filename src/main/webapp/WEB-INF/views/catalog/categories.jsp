@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+    <a href="${pageContext.request.contextPath}/cart">Корзина</a>
+
     <c:if test="${prevCategory!=null}">
         <a href="${pageContext.request.contextPath}/catalog/${prevCategory.slug}">${prevCategory.name}</a>
     </c:if>

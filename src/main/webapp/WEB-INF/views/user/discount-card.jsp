@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+    <a href="${pageContext.request.contextPath}/cart">Корзина</a>
+
     <a href="${pageContext.request.contextPath}/cabinet/update">Изменить личные данные</a>
     <a href="${pageContext.request.contextPath}/cabinet/history">История заказов</a>
     <a href="${pageContext.request.contextPath}/cabinet">Личные данные</a>

@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+    <a href="${pageContext.request.contextPath}/cart">Корзина</a>
+
     <form action="${pageContext.request.contextPath}/logout" method="post">
         <button type="submit">Выйти из аккаунта</button>
     </form>

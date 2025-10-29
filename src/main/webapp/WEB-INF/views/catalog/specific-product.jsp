@@ -4,7 +4,9 @@
 <head>
     <title>Title</title>
 </head>
-<body>
+<body data-context-path="${pageContext.request.contextPath}">
+    <a href="${pageContext.request.contextPath}/cart">Корзина</a>
+
     <p>${product.name}</p>
     <p>${product.description}</p>
     <p>${product.pricePerUnit}</p>
@@ -13,8 +15,10 @@
     <a href="${pageContext.request.contextPath}/catalog/${productCategory.slug}">${productCategory.name}</a>
 
 <%--    //TODO сделать корзину--%>
-    <form action="${pageContext.request.contextPath}/cart/${product.slug}" method="post">
-        <button type="submit">Добавить в корзину</button>
-    </form>
+    <div class="add-to-cart-button" data-product-id="${product.id}" data-user-id="${user.id}">
+        <button type="button" id="addToCartBtn">Добавить в корзину</button>
+    </div>
+
+    <script src="${pageContext.request.contextPath}/js/add-to-cart.js"></script>
 </body>
 </html>

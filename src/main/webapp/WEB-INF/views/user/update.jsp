@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+    <a href="${pageContext.request.contextPath}/cart">Корзина</a>
+
     <c:if test="${not empty error}">
       <div class="error-message">
         <h4>Ошибка обновления данных</h4>
