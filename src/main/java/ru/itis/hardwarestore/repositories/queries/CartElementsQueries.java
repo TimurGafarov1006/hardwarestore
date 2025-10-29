@@ -25,4 +25,9 @@ public class CartElementsQueries {
             FROM cart_elements
             WHERE id = ?
             """;
+    public static final String FIND_BY_USER_AND_PRODUCT_ID = """
+            SELECT *
+            FROM cart_elements
+            WHERE user_id = ? AND product_id = ?
+            """;
 }
