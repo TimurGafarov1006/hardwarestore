@@ -72,4 +72,9 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.update(order);
     }
+
+    @Override
+    public List<Order> getOrders(String userId) {
+        return orderRepository.findAllByUserId(userId);
+    }
 }
