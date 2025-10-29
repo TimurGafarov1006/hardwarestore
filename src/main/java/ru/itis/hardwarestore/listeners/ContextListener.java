@@ -25,6 +25,8 @@ public class ContextListener implements ServletContextListener {
         ProductRepository productRepository = new ProductRepositoryJdbc();
         DiscountCardRepository discountCardRepository = new DiscountCardRepositoryJdbc();
         CartElementRepository cartElementRepository = new CartElementRepositoryJdbc();
+        OrderRepository orderRepository = new OrderRepositoryJdbc();
+        OrderListRepository orderListRepository = new OrderListRepositoryJdbc();
 
         AuthService authService = new AuthServiceImpl(userRepository, sessionRepository);
         UserService userService = new UserServiceImpl(userRepository);
@@ -32,6 +34,7 @@ public class ContextListener implements ServletContextListener {
         ProductService productService = new ProductServiceImpl(productRepository);
         DiscountCardService discountCardService = new DiscountCardServiceImpl(discountCardRepository);
         CartElementService cartElementService = new CartElementServiceImpl(cartElementRepository, productService);
+        OrderService orderService = new OrderServiceImpl(orderRepository, orderListRepository, cartElementService, productService, discountCardService);
 
         sce.getServletContext().setAttribute("sessionRepository", sessionRepository);
         sce.getServletContext().setAttribute("sessionDuration", sessionDuration);
@@ -41,5 +44,6 @@ public class ContextListener implements ServletContextListener {
         sce.getServletContext().setAttribute("productService", productService);
         sce.getServletContext().setAttribute("discountCardService", discountCardService);
         sce.getServletContext().setAttribute("cartElementService", cartElementService);
+        sce.getServletContext().setAttribute("orderService", orderService);
     }
 }
