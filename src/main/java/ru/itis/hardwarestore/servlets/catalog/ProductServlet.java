@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.itis.hardwarestore.models.Category;
 import ru.itis.hardwarestore.models.Product;
+import ru.itis.hardwarestore.services.serviceInterfaces.CartElementService;
 import ru.itis.hardwarestore.services.serviceInterfaces.CategoryService;
 import ru.itis.hardwarestore.services.serviceInterfaces.ProductService;
 import ru.itis.hardwarestore.services.serviceInterfaces.UserService;
@@ -18,12 +19,14 @@ public class ProductServlet extends HttpServlet {
     private ProductService productService;
     private CategoryService categoryService;
     private UserService userService;
+    private CartElementService cartElementService;
 
     @Override
     public void init() throws ServletException {
         this.productService = (ProductService) getServletContext().getAttribute("productService");
         this.categoryService = (CategoryService) getServletContext().getAttribute("categoryService");
         this.userService = (UserService) getServletContext().getAttribute("userService");
+        this.cartElementService = (CartElementService) getServletContext().getAttribute("cartElementService");
     }
 
     @Override
@@ -39,6 +42,7 @@ public class ProductServlet extends HttpServlet {
         Category productCategory = categoryService.getCategory(product.getCategoryId());
         String userId = (String) req.getAttribute("userId");
 
+        req.setAttribute("isProductInCart", cartElementService.isProductInCart(userId, product.getId()));
         req.setAttribute("user", userService.getUser(userId));
         req.setAttribute("product", product);
         req.setAttribute("productCategory", productCategory);
