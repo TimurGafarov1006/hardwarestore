@@ -119,4 +119,32 @@ public class CartElementRepositoryJdbc implements CartElementRepository {
 
         return cartElements;
     }
+
+    @Override
+    public Optional<CartElement> findByUserAndProductId(String userId, int productId) {
+        try (Connection connection = DriverManager.getConnection(url, properties);
+             PreparedStatement statement = connection.prepareStatement(FIND_BY_USER_AND_PRODUCT_ID))
+        {
+            statement.setString(1, userId);
+            statement.setInt(2, productId);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                CartElement cartElement = new CartElement(
+                        resultSet.getInt("id"),
+                        resultSet.getString("user_id"),
+                        resultSet.getInt("product_id"),
+                        resultSet.getInt("quantity")
+                );
+
+                return Optional.ofNullable(cartElement);
+            }
+
+            resultSet.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return Optional.empty();
+    }
 }

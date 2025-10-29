@@ -11,4 +11,5 @@ public interface CartElementRepository {
     void delete(int id);
     Optional<CartElement> findById(int id);
     List<CartElement> findAllByUserId(String userId);
+    Optional<CartElement> findByUserAndProductId(String userId, int productId);
 }
