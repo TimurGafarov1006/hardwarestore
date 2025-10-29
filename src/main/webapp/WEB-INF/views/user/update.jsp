@@ -5,8 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-    <a href="${pageContext.request.contextPath}/cart">Корзина</a>
-
     <c:if test="${not empty error}">
       <div class="error-message">
         <h4>Ошибка обновления данных</h4>
@@ -17,6 +15,8 @@
       <button type="submit">Выйти из аккаунта</button>
     </form>
 
+    <a href="${pageContext.request.contextPath}/cart">Корзина</a>
+    <a href="${pageContext.request.contextPath}/catalog">Каталог</a>
     <a href="${pageContext.request.contextPath}/cabinet">Личные данные</a>
     <a href="${pageContext.request.contextPath}/cabinet/orders">История заказов</a>
     <a href="${pageContext.request.contextPath}/cabinet/discount-card">Скидочная карта</a>

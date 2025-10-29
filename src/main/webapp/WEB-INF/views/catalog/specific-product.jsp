@@ -12,6 +12,7 @@
     <p>${product.pricePerUnit}</p>
     <img src="${pageContext.request.contextPath}${product.imageUrl}" />
 
+    <a href="${pageContext.request.contextPath}/catalog">Каталог</a>
     <a href="${pageContext.request.contextPath}/catalog/${productCategory.slug}">${productCategory.name}</a>
 
 <%--    //TODO сделать корзину--%>

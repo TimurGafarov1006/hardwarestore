@@ -13,6 +13,7 @@
 
     <a href="${pageContext.request.contextPath}/catalog">Каталог</a>
     <a href="${pageContext.request.contextPath}/cabinet">Личный кабинет</a>
+    <a href="${pageContext.request.contextPath}/cart">Корзина</a>
 
     <c:forEach var="cartElement" items="${cart}">
         <p>Key: ${cartElement.value}</p>

@@ -7,6 +7,7 @@
 <body>
     <a href="${pageContext.request.contextPath}/cart">Корзина</a>
 
+    <a href="${pageContext.request.contextPath}/catalog">Каталог</a>
     <a href="${pageContext.request.contextPath}/catalog/${prevCategory.slug}">${prevCategory.name}</a>
 
     <c:forEach var="product" items="${products}">
