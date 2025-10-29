@@ -31,7 +31,7 @@ public class ContextListener implements ServletContextListener {
         CategoryService categoryService = new CategoryServiceImpl(categoryRepository);
         ProductService productService = new ProductServiceImpl(productRepository);
         DiscountCardService discountCardService = new DiscountCardServiceImpl(discountCardRepository);
-        CartElementService cartElementService = new CartElementServiceImpl(cartElementRepository);
+        CartElementService cartElementService = new CartElementServiceImpl(cartElementRepository, productService);
 
         sce.getServletContext().setAttribute("sessionRepository", sessionRepository);
         sce.getServletContext().setAttribute("sessionDuration", sessionDuration);
