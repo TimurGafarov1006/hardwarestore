@@ -57,4 +57,10 @@ public class CartElementServiceImpl implements CartElementService {
         }
         return cart;
     }
+
+    @Override
+    public void deleteProduct(CartElement cartElement) {
+        int cartElementId = cartElement.getId();
+        cartElementRepository.delete(cartElementId);
+    }
 }

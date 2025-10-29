@@ -11,4 +11,5 @@ public interface CartElementService {
     List<CartElement> getUserCart(String userId);
     void addOrUpdate(CartElement cartElement);
     Map<CartElement, Product> getCartContains(String userId);
+    void deleteProduct(CartElement cartElement);
 }
