@@ -28,7 +28,7 @@ public class OrderRepositoryJdbc implements OrderRepository {
     }
 
     @Override
-    public void save(Order order) {
+    public Integer save(Order order) {
         try (Connection connection = DriverManager.getConnection(url, properties);
              PreparedStatement statement = connection.prepareStatement(SAVE_SQL))
         {
@@ -39,6 +39,30 @@ public class OrderRepositoryJdbc implements OrderRepository {
             statement.setObject(5, order.getCreatedAt(), Types.TIMESTAMP);
             statement.setObject(6, order.getDeliveredAt(), Types.TIMESTAMP);
             statement.setObject(7, order.getClosedAt(), Types.TIMESTAMP);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Integer createdId = resultSet.getInt(1);
+                resultSet.close();
+                return createdId;
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void update(Order order) {
+        try (Connection connection = DriverManager.getConnection(url, properties);
+             PreparedStatement statement = connection.prepareStatement(UPDATE_SQL))
+        {
+            statement.setDouble(1, order.getAmountBeforeDiscount());
+            statement.setDouble(2, order.getDiscountAmount());
+            statement.setDouble(3, order.getTotalAmount());
+            statement.setObject(4, order.getDeliveredAt(), Types.TIMESTAMP);
+            statement.setObject(5, order.getClosedAt(), Types.TIMESTAMP);
+            statement.setInt(6, order.getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {

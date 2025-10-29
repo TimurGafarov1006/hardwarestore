@@ -5,6 +5,16 @@ public class OrderQueries {
             INSERT
             INTO orders (user_id, amount_before_discount, discount_amount, total_amount, created_at, delivered_at, closed_at)
             VALUES (?, ?, ?, ?, ?, ?, ?)
+            RETURNING id
+            """;
+    public static final String UPDATE_SQL = """
+            UPDATE orders
+            SET amount_before_discount = ?,
+                discount_amount = ?,
+                total_amount = ?,
+                delivered_at = ?,
+                closed_at = ?
+            WHERE id = ?
             """;
     public static final String FIND_BY_ID_SQL = """
             SELECT *
