@@ -15,9 +15,14 @@
     <a href="${pageContext.request.contextPath}/catalog/${productCategory.slug}">${productCategory.name}</a>
 
 <%--    //TODO сделать корзину--%>
-    <div class="add-to-cart-button" data-product-id="${product.id}" data-user-id="${user.id}">
-        <button type="button" id="addToCartBtn">Добавить в корзину</button>
-    </div>
+    <c:if test="${isProductInCart==false}">
+        <div class="add-to-cart-button" data-product-id="${product.id}" data-user-id="${user.id}">
+            <button type="button" id="addToCartBtn">Добавить в корзину</button>
+        </div>
+    </c:if>
+    <c:if test="${isProductInCart==true}">
+        <p>Продукт уже в корзине</p>
+    </c:if>
 
     <script src="${pageContext.request.contextPath}/js/add-to-cart.js"></script>
 </body>
