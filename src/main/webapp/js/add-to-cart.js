@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     button.addEventListener('click', function() {
         const contextPath = document.body.dataset.contextPath;
-        const container = this.closest('.add-to-cart-button'); // ← находим контейнер
+        const container = this.closest('.add-to-cart-button');
 
         const userId = container.dataset.userId;
         const productId = parseInt(container.dataset.productId, 10);
@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
             id: null,
             userId: userId,
             productId: productId,
-            quantity: 1
+            quantity: 1,
+            redirectAfter: true
         };
 
         fetch(contextPath + '/cart', {
@@ -23,11 +24,14 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify(data)
         })
-            .then(response => {
-                if (response.ok) {
+            .then(response => response.json())
+            .then(result => {
+                if (result.redirect) {
+                    window.location.href = result.redirect;
+                } else if (result.success) {
                     alert('Товар добавлен в корзину!');
                 } else {
-                    alert('Ошибка при добавлении в корзину');
+                    alert('Неизвестная ошибка');
                 }
             })
             .catch(error => {
