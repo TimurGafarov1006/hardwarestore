@@ -1,5 +1,6 @@
 package ru.itis.hardwarestore.servlets.user;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -34,7 +35,19 @@ public class CartServlet extends HttpServlet {
         String json = readJson(req);
         CartElement cartElement = JacksonUtils.jsonToCartElement(json);
 
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(json);
+        boolean redirectAfter = node.has("redirectAfter") && node.get("redirectAfter").asBoolean();
+
         cartElementService.addOrUpdate(cartElement);
+
+        if (redirectAfter) {
+            resp.setContentType("application/json; charset=UTF-8");
+            resp.getWriter().write("{\"redirect\": \"" + req.getContextPath() + "/cart\"}");
+        } else {
+            resp.setContentType("application/json; charset=UTF-8");
+            resp.getWriter().write("{\"success\": true}");
+        }
     }
 
     @Override
