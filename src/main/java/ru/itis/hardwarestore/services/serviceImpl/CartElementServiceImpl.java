@@ -2,17 +2,23 @@ package ru.itis.hardwarestore.services.serviceImpl;
 
 import ru.itis.hardwarestore.exceptions.CartException;
 import ru.itis.hardwarestore.models.CartElement;
+import ru.itis.hardwarestore.models.Product;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.CartElementRepository;
 import ru.itis.hardwarestore.services.serviceInterfaces.CartElementService;
+import ru.itis.hardwarestore.services.serviceInterfaces.ProductService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class CartElementServiceImpl implements CartElementService {
     private CartElementRepository cartElementRepository;
+    private ProductService productService;
 
-    public CartElementServiceImpl(CartElementRepository cartElementRepository) {
+    public CartElementServiceImpl(CartElementRepository cartElementRepository, ProductService productService) {
         this.cartElementRepository = cartElementRepository;
+        this.productService = productService;
     }
 
     @Override
@@ -41,5 +47,14 @@ public class CartElementServiceImpl implements CartElementService {
         } else {
             cartElementRepository.save(cartElement);
         }
+    }
+
+    @Override
+    public Map<CartElement, Product> getCartContains(String userId) {
+        Map<CartElement, Product> cart = new HashMap<>();
+        for (CartElement cartElement : getUserCart(userId)) {
+            cart.put(cartElement, productService.getProduct(cartElement.getProductId()));
+        }
+        return cart;
     }
 }
