@@ -41,4 +41,9 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductNotFoundException("Product with slug %s not found".formatted(slug));
         }
     }
+
+    @Override
+    public List<Product> getProductsLikeName(String name) {
+        return productRepository.findAllLikeName(name);
+    }
 }

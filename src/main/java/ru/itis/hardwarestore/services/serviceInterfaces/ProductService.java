@@ -8,4 +8,5 @@ public interface ProductService {
     Product getProduct(int productId);
     List<Product> getCategoryProducts(int categoryId);
     Product getProductBySlug(String slug);
+    List<Product> getProductsLikeName(String name);
 }
