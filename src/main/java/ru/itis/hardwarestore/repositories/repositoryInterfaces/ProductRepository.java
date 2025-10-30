@@ -13,4 +13,5 @@ public interface ProductRepository {
     List<Product> findByCategoryId(int categoryId);
     Optional<Product> findById(int id);
     Optional<Product> findBySlug(String slug);
+    List<Product> findAllLikeName(String name);
 }

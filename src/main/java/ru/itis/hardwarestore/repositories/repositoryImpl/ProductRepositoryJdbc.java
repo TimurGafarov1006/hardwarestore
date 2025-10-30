@@ -89,19 +89,7 @@ public class ProductRepositoryJdbc implements ProductRepository {
              ResultSet resultSet = statement.executeQuery())
         {
             while (resultSet.next()) {
-                Product product = new Product(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("slug"),
-                        resultSet.getString("description"),
-                        resultSet.getInt("category_id"),
-                        resultSet.getDouble("price_per_unit"),
-                        resultSet.getInt("quantity"),
-                        resultSet.getString("image_url"),
-                        resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
-                );
-                products.add(product);
+                products.add(toProduct(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -121,19 +109,7 @@ public class ProductRepositoryJdbc implements ProductRepository {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                Product product = new Product(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("slug"),
-                        resultSet.getString("description"),
-                        resultSet.getInt("category_id"),
-                        resultSet.getDouble("price_per_unit"),
-                        resultSet.getInt("quantity"),
-                        resultSet.getString("image_url"),
-                        resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
-                );
-                products.add(product);
+                products.add(toProduct(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -151,20 +127,7 @@ public class ProductRepositoryJdbc implements ProductRepository {
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                Product product = new Product(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("slug"),
-                        resultSet.getString("description"),
-                        resultSet.getInt("category_id"),
-                        resultSet.getDouble("price_per_unit"),
-                        resultSet.getInt("quantity"),
-                        resultSet.getString("image_url"),
-                        resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
-                );
-
-                return Optional.ofNullable(product);
+                return Optional.ofNullable(toProduct(resultSet));
             }
 
             resultSet.close();
@@ -184,20 +147,7 @@ public class ProductRepositoryJdbc implements ProductRepository {
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                Product product = new Product(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("slug"),
-                        resultSet.getString("description"),
-                        resultSet.getInt("category_id"),
-                        resultSet.getDouble("price_per_unit"),
-                        resultSet.getInt("quantity"),
-                        resultSet.getString("image_url"),
-                        resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
-                );
-
-                return Optional.ofNullable(product);
+                return Optional.ofNullable(toProduct(resultSet));
             }
 
             resultSet.close();
@@ -206,5 +156,41 @@ public class ProductRepositoryJdbc implements ProductRepository {
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    public List<Product> findAllLikeName(String name) {
+        List<Product> products = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(url, properties);
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_LIKE_NAME_SQL))
+        {
+            statement.setString(1, name.toLowerCase() + "%");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                products.add(toProduct(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return products;
+    }
+
+    private Product toProduct(ResultSet resultSet) throws SQLException {
+        Product product = new Product(
+                resultSet.getInt("id"),
+                resultSet.getString("name"),
+                resultSet.getString("slug"),
+                resultSet.getString("description"),
+                resultSet.getInt("category_id"),
+                resultSet.getDouble("price_per_unit"),
+                resultSet.getInt("quantity"),
+                resultSet.getString("image_url"),
+                resultSet.getTimestamp("created_at").toLocalDateTime(),
+                resultSet.getTimestamp("updated_at").toLocalDateTime()
+        );
+        return product;
     }
 }

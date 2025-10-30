@@ -25,6 +25,11 @@ public class ProductQueries {
             FROM products
             WHERE slug = ?
             """;
+    public static final String FIND_ALL_LIKE_NAME_SQL = """
+            SELECT *
+            FROM products
+            WHERE name LIKE ?
+            """;
     public static final String UPDATE_SQL = """
             UPDATE products
             SET name = ?,
