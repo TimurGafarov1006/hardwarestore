@@ -14,7 +14,6 @@ body {
     gap: 24px;
 }
 
-/* Левая навигационная панель */
 .nav-sidebar {
     background: #fff;
     border-radius: 16px;
@@ -65,7 +64,6 @@ body {
     background: #ff1a1a;
 }
 
-/* Правая панель с данными пользователя */
 .user-info-panel {
     flex: 1;
     background: #fff;
