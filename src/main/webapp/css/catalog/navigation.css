@@ -1,0 +1,138 @@
+/* Основная навигация */
+.catalog-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    flex-wrap: nowrap;
+}
+
+.nav-left,
+.nav-center,
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-left {
+    flex: 1;
+    justify-content: flex-start;
+}
+
+.nav-center {
+    flex: 2;
+    justify-content: center;
+}
+
+.nav-right {
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.nav-left a,
+.nav-right a {
+    text-decoration: none;
+    color: #333;
+    margin-left: 16px;
+    font-weight: 500;
+}
+
+.nav-left a {
+    margin-left: 0;
+}
+
+.nav-right a:first-child {
+    margin-left: 0;
+}
+
+.nav-right a:hover,
+.nav-left a:hover {
+    color: #007bff;
+}
+
+.search-container {
+    position: relative;
+    width: 300px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#searchSuggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1001;
+    display: none;
+}
+
+.search-suggestion-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    gap: 12px;
+}
+.search-suggestion-item:hover {
+    background-color: #f9f9f9;
+}
+.suggestion-image {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.suggestion-info {
+    flex: 1;
+}
+.suggestion-name {
+    font-weight: bold;
+    font-size: 14px;
+}
+.suggestion-price {
+    font-size: 12px;
+    color: #555;
+}
+
+/* Стили для блока с кнопкой "Назад к категории" */
+.back-to-category-wrapper {
+    padding: 8px 20px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+    margin-top: -1px;
+}
+
+.back-to-category-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.back-to-category-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
