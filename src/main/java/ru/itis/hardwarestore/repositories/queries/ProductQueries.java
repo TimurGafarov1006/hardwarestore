@@ -28,7 +28,7 @@ public class ProductQueries {
     public static final String FIND_ALL_LIKE_NAME_SQL = """
             SELECT *
             FROM products
-            WHERE name LIKE ?
+            WHERE name ILIKE ?
             """;
     public static final String UPDATE_SQL = """
             UPDATE products
