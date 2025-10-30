@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum CardType {
-    SILVER(1, "Серебрянная", 5),
-    GOLDEN(2, "Золотая", 7),
-    PLATINUM(3, "Платиновая", 10);
+    SILVER(1, "silver", 5),
+    GOLDEN(2, "gold", 7),
+    PLATINUM(3, "platinum", 10);
 
     private final int id;
     private final String name;
