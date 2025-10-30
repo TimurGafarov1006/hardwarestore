@@ -87,6 +87,14 @@ body {
     font-weight: 600;
 }
 
+.user-info-panel {
+    flex: 1;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    padding: 32px;
+}
+
 .quantity-controls {
     display: flex;
     align-items: center;
