@@ -1,6 +1,7 @@
 package ru.itis.hardwarestore.services.serviceImpl;
 
 import ru.itis.hardwarestore.exceptions.DiscountCardException;
+import ru.itis.hardwarestore.exceptions.OrderNotFoundException;
 import ru.itis.hardwarestore.models.*;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.OrderListRepository;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.OrderRepository;
@@ -10,8 +11,7 @@ import ru.itis.hardwarestore.services.serviceInterfaces.OrderService;
 import ru.itis.hardwarestore.services.serviceInterfaces.ProductService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class OrderServiceImpl implements OrderService {
     OrderRepository orderRepository;
@@ -82,5 +82,26 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getOrders(String userId) {
         return orderRepository.findAllByUserId(userId);
+    }
+
+    @Override
+    public Map<Order, Map<Product, Integer>> getOrder(Integer orderId) {
+        Optional<Order> orderOptional = orderRepository.findById(orderId);
+        Map<Order, Map<Product, Integer>> result = new HashMap<>();
+
+        if (orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+            Map<Product, Integer> products = new HashMap<>();
+
+            for (OrderList orderList : orderListRepository.findAllByOrderId(orderId)) {
+                Product product = productService.getProduct(orderList.getProductId());
+                products.put(product, orderList.getQuantity());
+            }
+            result.put(order, products);
+
+            return result;
+        } else {
+            throw new OrderNotFoundException(orderId);
+        }
     }
 }
