@@ -1,54 +1,64 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags/user" %>
+
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/navigation.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user/update.css" />
 </head>
 <body>
-    <c:if test="${not empty error}">
-      <div class="error-message">
-        <h4>Ошибка обновления данных</h4>
-        <p>${error}</p>
-      </div>
-    </c:if>
-    <form action="${pageContext.request.contextPath}/logout" method="post">
-      <button type="submit">Выйти из аккаунта</button>
-    </form>
+    <div class="container">
+        <t:navigation />
 
-    <a href="${pageContext.request.contextPath}/cart">Корзина</a>
-    <a href="${pageContext.request.contextPath}/catalog">Каталог</a>
-    <a href="${pageContext.request.contextPath}/cabinet">Личные данные</a>
-    <a href="${pageContext.request.contextPath}/cabinet/orders">История заказов</a>
-    <a href="${pageContext.request.contextPath}/cabinet/discount-card">Скидочная карта</a>
+        <div class="user-info-panel">
+            <h2 class="user-info-title">Редактирование профиля</h2>
 
-    <form method="POST" action="${pageContext.request.contextPath}/cabinet/update">
-      <label for="first_name">Имя:</label>
-      <textarea name="first_name" id="first_name">${user.firstName}</textarea>
+            <c:if test="${not empty error}">
+                <div class="error-message">
+                    <strong>Ошибка обновления данных:</strong> ${error}
+                </div>
+            </c:if>
 
-      <label for="last_name">Фамилия:</label>
-      <textarea name="last_name" id="last_name">${user.lastName}</textarea>
+            <form class="edit-form" method="POST" action="${pageContext.request.contextPath}/cabinet/update">
+                <div class="form-group">
+                    <label for="first_name">Имя:</label>
+                    <textarea name="first_name" id="first_name" maxlength="100">${user.firstName}</textarea>
+                </div>
 
-      <label for="password">Новый пароль:</label>
-      <input type="password" name="password" id="password"/>
+                <div class="form-group">
+                    <label for="last_name">Фамилия:</label>
+                    <textarea name="last_name" id="last_name" maxlength="100">${user.lastName}</textarea>
+                </div>
 
-      <label for="phone">Телефон:</label>
-      <textarea name="phone" id="phone">${user.phone}</textarea>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <textarea name="email" id="email" maxlength="255">${user.email}</textarea>
+                </div>
 
-      <label for="email">Почта:</label>
-      <textarea name="email" id="email">${user.email}</textarea>
+                <div class="form-group">
+                    <label for="phone">Телефон:</label>
+                    <textarea name="phone" id="phone" maxlength="20">${user.phone}</textarea>
+                </div>
 
-      <c:if test="${user.birthday!=null}">
-        <label for="birthday">День рождения:</label>
-        <input type="date" name="birthday" id="birthday" value="${user.birthday}" readonly>
-      </c:if>
+                <div class="form-group">
+                    <label for="password">Новый пароль (оставьте пустым, если не меняете):</label>
+                    <input type="password" name="password" id="password" />
+                </div>
 
-      <c:if test="${user.birthday==null}">
-        <label for="birthday">День рождения:</label>
-        <input type="date" name="birthday" id="birthday" >
-      </c:if>
+                <div class="form-group">
+                    <label for="birthday">Дата рождения:</label>
+                    <input type="date" name="birthday" id="birthday"
+                           value="<fmt:formatDate value='${user.birthday}' pattern='yyyy-MM-dd' />" />
+                </div>
 
-      <button type="submit">Сохранить изменения</button>
-
-    </form>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    <a href="${pageContext.request.contextPath}/cabinet" class="btn btn-secondary">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
