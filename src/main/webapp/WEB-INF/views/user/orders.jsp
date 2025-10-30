@@ -24,7 +24,7 @@
                         <c:forEach var="order" items="${orders}">
                             <div class="order-card">
                                 <div class="order-header">
-                                    <span class="order-id">Заказ №${order.id}</span>
+                                    <a href="${pageContext.request.contextPath}/cabinet/orders/${order.id}"><span class="order-id">Заказ №${order.id}</span></a>
                                     <span class="order-date">
                                             <fmt:formatDate value="${order.createdAt}" pattern="dd.MM.yyyy HH:mm" />
                                         </span>
