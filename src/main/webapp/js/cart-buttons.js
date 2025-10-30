@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cartId = item.dataset.cartId ? parseInt(item.dataset.cartId, 10) : null;
             const userId = item.dataset.userId;
             const productId = parseInt(item.dataset.productId, 10);
-            const qtyElement = item.querySelector('.quantity');
+            const qtyElement = item.querySelector('.quantity-display');
             const currentQty = parseInt(qtyElement?.textContent || '1', 10);
             const newQty = currentQty + 1;
 
@@ -31,14 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const cartId = item.dataset.cartId ? parseInt(item.dataset.cartId, 10) : null;
             const userId = item.dataset.userId;
             const productId = parseInt(item.dataset.productId, 10);
-            const qtyElement = item.querySelector('.quantity');
+            const qtyElement = item.querySelector('.quantity-display');
             const currentQty = parseInt(qtyElement?.textContent || '1', 10);
             const newQty = currentQty - 1;
 
             if (newQty <= 0) {
                 if (confirm('Удалить товар из корзины?')) {
                     await removeCartItem(cartId, item);
-                } else {
                 }
                 return;
             }
@@ -52,8 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Кнопка "Удалить"
-    document.querySelectorAll('.remove').forEach(button => {
+    document.querySelectorAll('.remove-btn').forEach(button => {
         button.addEventListener('click', async function () {
             const item = this.closest('.cart-item');
             const cartId = item?.dataset.cartId ? parseInt(item.dataset.cartId, 10) : null;
@@ -88,7 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 item?.remove();
 
-                window.location.reload();
+                const remainingItems = document.querySelectorAll('.cart-item');
+                if (remainingItems.length === 0) {
+                    window.location.reload();
+                }
             } else {
                 alert('Не удалось удалить товар');
             }
