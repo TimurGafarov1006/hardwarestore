@@ -31,9 +31,9 @@
                 <div><span class="info-label">Дата рождения:</span></div>
                 <div>
                     <c:choose>
-                        <c:when test="${not empty user.birthday}">
+                        <c:when test="${not empty userBirthday}">
                             <span class="info-value">
-                                <fmt:formatDate value="${user.birthday}" pattern="dd.MM.yyyy" />
+                                <fmt:formatDate value="${userBirthday}" pattern="dd.MM.yyyy" />
                             </span>
                         </c:when>
                         <c:otherwise>

@@ -6,9 +6,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.itis.hardwarestore.exceptions.UnauthorizedException;
+import ru.itis.hardwarestore.models.User;
 import ru.itis.hardwarestore.services.serviceInterfaces.UserService;
 
 import java.io.IOException;
+import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 @WebServlet("/cabinet")
 public class CabinetServlet extends HttpServlet {
@@ -24,7 +28,13 @@ public class CabinetServlet extends HttpServlet {
         String userId = (String) req.getAttribute("userId");
 
         try {
-            req.setAttribute("user", userService.getUser(userId));
+            User user = userService.getUser(userId);
+            LocalDate birthday = user.getBirthday();
+            Date birthdayAsUtilDate = (birthday != null)
+                    ? (Date) Date.from(birthday.atStartOfDay(ZoneId.systemDefault()).toInstant())
+                    : null;
+            req.setAttribute("user", user);
+            req.setAttribute("userBirthday", birthdayAsUtilDate);
         } catch (UnauthorizedException e) {
             resp.sendRedirect(req.getContextPath() + "/login");
         }
