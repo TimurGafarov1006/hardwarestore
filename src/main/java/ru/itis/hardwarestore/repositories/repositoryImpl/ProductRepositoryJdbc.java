@@ -165,7 +165,7 @@ public class ProductRepositoryJdbc implements ProductRepository {
         try (Connection connection = DriverManager.getConnection(url, properties);
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_LIKE_NAME_SQL))
         {
-            statement.setString(1, name.toLowerCase() + "%");
+            statement.setString(1, "%" + name.toLowerCase() + "%");
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
