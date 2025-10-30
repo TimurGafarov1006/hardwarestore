@@ -4,7 +4,12 @@
 <head>
     <title>Title</title>
 </head>
-<body>
+<body data-context-path="${pageContext.request.contextPath}">
+    <div style="position: relative; margin-bottom: 20px;">
+        <input type="text" id="searchInput" placeholder="Поиск товаров..." autocomplete="off" style="width: 300px; padding: 6px;" />
+        <div id="searchSuggestions"></div>
+    </div>
+
     <a href="${pageContext.request.contextPath}/cart">Корзина</a>
 
     <c:if test="${prevCategory!=null}">
@@ -21,5 +26,7 @@
     </c:forEach>
 
     <a href="${pageContext.request.contextPath}/cabinet">Личный кабинет</a>
+
+    <script src="${pageContext.request.contextPath}/js/search.js"></script>
 </body>
 </html>
