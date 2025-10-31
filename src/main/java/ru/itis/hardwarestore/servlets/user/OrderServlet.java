@@ -32,7 +32,7 @@ public class OrderServlet extends HttpServlet {
         } else {
             Integer orderId = Integer.parseInt(pathInfo.substring(1));
 
-            Map<Order, Map<Product, Integer>> orderData = orderService.getOrder(orderId);
+            Map<Order, Map<Product, Integer>> orderData = orderService.getOrderContent(orderId);
             Map.Entry<Order, Map<Product, Integer>> entry = orderData.entrySet().iterator().next();
 
             Order order = entry.getKey();
