@@ -1,6 +1,7 @@
 package ru.itis.hardwarestore.repositories.impl;
 
 import ru.itis.hardwarestore.models.DiscountCard;
+import ru.itis.hardwarestore.models.OrderList;
 import ru.itis.hardwarestore.models.enums.CardStatus;
 import ru.itis.hardwarestore.models.enums.CardType;
 import ru.itis.hardwarestore.repositories.interfaces.DiscountCardRepository;
@@ -79,22 +80,9 @@ public class DiscountCardRepositoryJdbc implements DiscountCardRepository {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_CARD_NO_SQL))
         {
             statement.setString(1, cardNo);
-
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                DiscountCard discountCard = new DiscountCard(
-                        resultSet.getString("id"),
-                        resultSet.getString("user_id"),
-                        resultSet.getString("card_no"),
-                        CardType.fromId(resultSet.getInt("card_type_id")),
-                        CardStatus.valueOf(resultSet.getString("status")),
-                        resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
-                );
 
-                return Optional.ofNullable(discountCard);
-            }
-
+            if (resultSet.next()) return Optional.ofNullable(toDiscountCard(resultSet));
             resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -109,27 +97,28 @@ public class DiscountCardRepositoryJdbc implements DiscountCardRepository {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_USER_ID_SQL))
         {
             statement.setString(1, userId);
-
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                DiscountCard discountCard = new DiscountCard(
-                        resultSet.getString("id"),
-                        resultSet.getString("user_id"),
-                        resultSet.getString("card_no"),
-                        CardType.fromId(resultSet.getInt("card_type_id")),
-                        CardStatus.valueOf(resultSet.getString("status")),
-                        resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
-                );
 
-                return Optional.ofNullable(discountCard);
-            }
-
+            if (resultSet.next()) return Optional.ofNullable(toDiscountCard(resultSet));
             resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         return Optional.empty();
+    }
+
+    private DiscountCard toDiscountCard(ResultSet resultSet) throws SQLException {
+        DiscountCard discountCard = new DiscountCard(
+                resultSet.getString("id"),
+                resultSet.getString("user_id"),
+                resultSet.getString("card_no"),
+                CardType.fromId(resultSet.getInt("card_type_id")),
+                CardStatus.valueOf(resultSet.getString("status")),
+                resultSet.getTimestamp("created_at").toLocalDateTime(),
+                resultSet.getTimestamp("updated_at").toLocalDateTime()
+        );
+
+        return discountCard;
     }
 }

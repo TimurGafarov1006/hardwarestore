@@ -93,22 +93,7 @@ public class UserRepositoryJdbc implements UserRepository {
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_SQL);
              ResultSet resultSet = statement.executeQuery())
         {
-            while (resultSet.next()) {
-                User user = new User(
-                        resultSet.getString("id"),
-                        UserRole.valueOf(resultSet.getString("role")),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name"),
-                        resultSet.getString("password_hash"),
-                        resultSet.getString("salt"),
-                        resultSet.getString("phone"),
-                        resultSet.getString("email"),
-                        resultSet.getDate("birthday").toLocalDate(),
-                        resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
-                );
-                users.add(user);
-            }
+            while (resultSet.next()) users.add(toUser(resultSet));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -122,26 +107,9 @@ public class UserRepositoryJdbc implements UserRepository {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_SQL))
         {
             statement.setString(1, id);
-
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                User user = new User(
-                        resultSet.getString("id"),
-                        UserRole.valueOf(resultSet.getString("role")),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name"),
-                        resultSet.getString("password_hash"),
-                        resultSet.getString("salt"),
-                        resultSet.getString("phone"),
-                        resultSet.getString("email"),
-                        resultSet.getDate("birthday") != null ? resultSet.getDate("birthday").toLocalDate() : null,
-                        resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
-                );
 
-                return Optional.ofNullable(user);
-            }
-
+            if (resultSet.next()) return Optional.ofNullable(toUser(resultSet));
             resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -156,26 +124,9 @@ public class UserRepositoryJdbc implements UserRepository {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_EMAIL_SQL))
         {
             statement.setString(1, email);
-
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                User user = new User(
-                        resultSet.getString("id"),
-                        UserRole.valueOf(resultSet.getString("role")),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name"),
-                        resultSet.getString("password_hash"),
-                        resultSet.getString("salt"),
-                        resultSet.getString("phone"),
-                        resultSet.getString("email"),
-                        resultSet.getDate("birthday") != null ? resultSet.getDate("birthday").toLocalDate() : null,
-                        resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
-                );
 
-                return Optional.ofNullable(user);
-            }
-
+            if (resultSet.next()) return Optional.ofNullable(toUser(resultSet));
             resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -190,31 +141,30 @@ public class UserRepositoryJdbc implements UserRepository {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_PHONE_SQL))
         {
             statement.setString(1, phone);
-
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                User user = new User(
-                        resultSet.getString("id"),
-                        UserRole.valueOf(resultSet.getString("role")),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name"),
-                        resultSet.getString("password_hash"),
-                        resultSet.getString("salt"),
-                        resultSet.getString("phone"),
-                        resultSet.getString("email"),
-                        resultSet.getDate("birthday") != null ? resultSet.getDate("birthday").toLocalDate() : null,
-                        resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
-                );
 
-                return Optional.ofNullable(user);
-            }
-
+            if (resultSet.next()) return Optional.ofNullable(toUser(resultSet));
             resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         return Optional.empty();
+    }
+
+    private User toUser(ResultSet resultSet) throws SQLException {
+        return new User(
+                resultSet.getString("id"),
+                UserRole.valueOf(resultSet.getString("role")),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getString("password_hash"),
+                resultSet.getString("salt"),
+                resultSet.getString("phone"),
+                resultSet.getString("email"),
+                resultSet.getDate("birthday") != null ? resultSet.getDate("birthday").toLocalDate() : null,
+                resultSet.getTimestamp("created_at").toLocalDateTime(),
+                resultSet.getTimestamp("updated_at").toLocalDateTime()
+        );
     }
 }

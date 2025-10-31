@@ -74,19 +74,9 @@ public class CartElementRepositoryJdbc implements CartElementRepository {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_SQL))
         {
             statement.setInt(1, id);
-
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                CartElement cartElement = new CartElement(
-                        resultSet.getInt("id"),
-                        resultSet.getString("user_id"),
-                        resultSet.getInt("product_id"),
-                        resultSet.getInt("quantity")
-                );
 
-                return Optional.ofNullable(cartElement);
-            }
-
+            if (resultSet.next()) return Optional.ofNullable(toCartElement(resultSet));
             resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -105,15 +95,7 @@ public class CartElementRepositoryJdbc implements CartElementRepository {
             statement.setString(1, userId);
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
-                CartElement cartElement = new CartElement(
-                        resultSet.getInt("id"),
-                        resultSet.getString("user_id"),
-                        resultSet.getInt("product_id"),
-                        resultSet.getInt("quantity")
-                );
-                cartElements.add(cartElement);
-            }
+            while (resultSet.next()) cartElements.add(toCartElement(resultSet));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -128,24 +110,23 @@ public class CartElementRepositoryJdbc implements CartElementRepository {
         {
             statement.setString(1, userId);
             statement.setInt(2, productId);
-
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                CartElement cartElement = new CartElement(
-                        resultSet.getInt("id"),
-                        resultSet.getString("user_id"),
-                        resultSet.getInt("product_id"),
-                        resultSet.getInt("quantity")
-                );
 
-                return Optional.ofNullable(cartElement);
-            }
-
+            if (resultSet.next()) return Optional.ofNullable(toCartElement(resultSet));
             resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         return Optional.empty();
+    }
+
+    private CartElement toCartElement(ResultSet resultSet) throws SQLException {
+        return new CartElement(
+                resultSet.getInt("id"),
+                resultSet.getString("user_id"),
+                resultSet.getInt("product_id"),
+                resultSet.getInt("quantity")
+        );
     }
 }

@@ -88,9 +88,7 @@ public class ProductRepositoryJdbc implements ProductRepository {
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_SQL);
              ResultSet resultSet = statement.executeQuery())
         {
-            while (resultSet.next()) {
-                products.add(toProduct(resultSet));
-            }
+            while (resultSet.next()) products.add(toProduct(resultSet));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -108,9 +106,7 @@ public class ProductRepositoryJdbc implements ProductRepository {
             statement.setInt(1, categoryId);
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
-                products.add(toProduct(resultSet));
-            }
+            while (resultSet.next()) products.add(toProduct(resultSet));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -124,12 +120,9 @@ public class ProductRepositoryJdbc implements ProductRepository {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_SQL))
         {
             statement.setInt(1, id);
-
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return Optional.ofNullable(toProduct(resultSet));
-            }
 
+            if (resultSet.next()) return Optional.ofNullable(toProduct(resultSet));
             resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -144,12 +137,9 @@ public class ProductRepositoryJdbc implements ProductRepository {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_SLUG_SQL))
         {
             statement.setString(1, slug);
-
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return Optional.ofNullable(toProduct(resultSet));
-            }
 
+            if (resultSet.next()) return Optional.ofNullable(toProduct(resultSet));
             resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -168,9 +158,8 @@ public class ProductRepositoryJdbc implements ProductRepository {
             statement.setString(1, "%" + name.toLowerCase() + "%");
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
-                products.add(toProduct(resultSet));
-            }
+            while (resultSet.next()) products.add(toProduct(resultSet));
+            resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -179,7 +168,7 @@ public class ProductRepositoryJdbc implements ProductRepository {
     }
 
     private Product toProduct(ResultSet resultSet) throws SQLException {
-        Product product = new Product(
+        return new Product(
                 resultSet.getInt("id"),
                 resultSet.getString("name"),
                 resultSet.getString("slug"),
@@ -191,6 +180,5 @@ public class ProductRepositoryJdbc implements ProductRepository {
                 resultSet.getTimestamp("created_at").toLocalDateTime(),
                 resultSet.getTimestamp("updated_at").toLocalDateTime()
         );
-        return product;
     }
 }

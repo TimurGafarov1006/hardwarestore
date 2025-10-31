@@ -76,23 +76,9 @@ public class OrderRepositoryJdbc implements OrderRepository {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_SQL))
         {
             statement.setInt(1, id);
-
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                Order order = new Order(
-                        resultSet.getInt("id"),
-                        resultSet.getString("user_id"),
-                        resultSet.getDouble("amount_before_discount"),
-                        resultSet.getDouble("discount_amount"),
-                        resultSet.getDouble("total_amount"),
-                        resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("delivered_at") != null ? resultSet.getTimestamp("delivered_at").toLocalDateTime() : null,
-                        resultSet.getTimestamp("closed_at") != null ? resultSet.getTimestamp("closed_at").toLocalDateTime() : null
-                );
 
-                return Optional.ofNullable(order);
-            }
-
+            if (resultSet.next()) return Optional.ofNullable(toOrder(resultSet));
             resultSet.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -111,24 +97,24 @@ public class OrderRepositoryJdbc implements OrderRepository {
             statement.setString(1, userId);
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
-                Order order = new Order(
-                        resultSet.getInt("id"),
-                        resultSet.getString("user_id"),
-                        resultSet.getDouble("amount_before_discount"),
-                        resultSet.getDouble("discount_amount"),
-                        resultSet.getDouble("total_amount"),
-                        resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("delivered_at") != null ? resultSet.getTimestamp("delivered_at").toLocalDateTime() : null,
-                        resultSet.getTimestamp("closed_at") != null ? resultSet.getTimestamp("closed_at").toLocalDateTime() : null
-                );
-
-                orders.add(order);
-            }
+            while (resultSet.next()) orders.add(toOrder(resultSet));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         return orders;
+    }
+
+    private Order toOrder(ResultSet resultSet) throws SQLException {
+        return new Order(
+                resultSet.getInt("id"),
+                resultSet.getString("user_id"),
+                resultSet.getDouble("amount_before_discount"),
+                resultSet.getDouble("discount_amount"),
+                resultSet.getDouble("total_amount"),
+                resultSet.getTimestamp("created_at").toLocalDateTime(),
+                resultSet.getTimestamp("delivered_at") != null ? resultSet.getTimestamp("delivered_at").toLocalDateTime() : null,
+                resultSet.getTimestamp("closed_at") != null ? resultSet.getTimestamp("closed_at").toLocalDateTime() : null
+        );
     }
 }
