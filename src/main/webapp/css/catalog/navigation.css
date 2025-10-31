@@ -3,12 +3,14 @@
     justify-content: space-between;
     align-items: center;
     padding: 12px 20px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #e0e0e0;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
     position: sticky;
-    top: 0;
+    top: 16px;
     z-index: 1000;
     flex-wrap: nowrap;
+    margin-bottom: 16px;
 }
 
 .nav-left,
@@ -16,6 +18,7 @@
 .nav-right {
     display: flex;
     align-items: center;
+    gap: 12px;
 }
 
 .nav-left {
@@ -36,22 +39,19 @@
 .nav-left a,
 .nav-right a {
     text-decoration: none;
-    color: #333;
-    margin-left: 16px;
-    font-weight: 500;
+    color: #007BFF;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
 }
 
-.nav-left a {
-    margin-left: 0;
-}
-
-.nav-right a:first-child {
-    margin-left: 0;
-}
-
-.nav-right a:hover,
-.nav-left a:hover {
-    color: #007bff;
+.nav-left a:hover,
+.nav-right a:hover {
+    background-color: #f5f5f5;
+    color: #0056b3;
+    text-decoration: underline;
 }
 
 .search-container {
@@ -61,11 +61,18 @@
 
 #searchInput {
     width: 100%;
-    padding: 6px 10px;
+    padding: 8px 12px;
     font-size: 14px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 8px;
     box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    transition: border-color 0.2s;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #007BFF;
 }
 
 #searchSuggestions {
@@ -76,35 +83,42 @@
     background: white;
     border: 1px solid #ccc;
     border-top: none;
+    border-radius: 0 0 8px 8px;
     max-height: 200px;
     overflow-y: auto;
     z-index: 1001;
     display: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .search-suggestion-item {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 10px 12px;
     cursor: pointer;
     border-bottom: 1px solid #eee;
     gap: 12px;
+    transition: background 0.2s;
+}
+.search-suggestion-item:last-child {
+    border-bottom: none;
 }
 .search-suggestion-item:hover {
-    background-color: #f9f9f9;
+    background-color: #f5f5f5;
 }
 .suggestion-image {
     width: 40px;
     height: 40px;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 .suggestion-info {
     flex: 1;
 }
 .suggestion-name {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 14px;
+    color: #222;
 }
 .suggestion-price {
     font-size: 12px;
@@ -114,9 +128,9 @@
 .back-to-category-wrapper {
     padding: 8px 20px;
     background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-top: none;
-    margin-top: -1px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    margin-bottom: 16px;
 }
 
 .back-to-category-link {
