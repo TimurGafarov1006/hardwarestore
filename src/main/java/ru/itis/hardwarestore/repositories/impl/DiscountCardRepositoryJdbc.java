@@ -55,6 +55,7 @@ public class DiscountCardRepositoryJdbc implements DiscountCardRepository {
             statement.setInt(1, discountCard.getCardType().getId());
             statement.setString(2, discountCard.getCardStatus().getStatus());
             statement.setObject(3, discountCard.getUpdatedAt(), Types.TIMESTAMP);
+            statement.setString(4, discountCard.getUserId());
 
             statement.executeUpdate();
         } catch (SQLException e) {

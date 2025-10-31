@@ -77,6 +77,11 @@ public class OrderServiceImpl implements OrderService {
         for (CartElement cartElement : cartElements) {
             cartElementService.deleteProduct(cartElement);
         }
+
+        List<Order> userOrders = orderRepository.findAllByUserId(userId);
+        if (userOrders.size() == 5 || userOrders.size() == 20) {
+            discountCardService.upgradeDiscountCard(userId);
+        }
     }
 
     @Override
