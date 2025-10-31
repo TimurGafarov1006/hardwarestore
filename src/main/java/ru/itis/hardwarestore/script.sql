@@ -42,6 +42,7 @@ CREATE TABLE categories (
                             name TEXT NOT NULL ,
                             parent_id INT ,
                             slug TEXT NOT NULL ,
+                            image_url TEXT NOT NULL ,
                             created_at TIMESTAMP NOT NULL ,
                             updated_at TIMESTAMP NOT NULL ,
     ---------------------
@@ -135,14 +136,14 @@ VALUES (1, 'SILVER', 5),
        (2, 'GOLDEN', 7),
        (3, 'PLATINUM', 10);
 
-INSERT INTO categories(name, parent_id, slug, created_at, updated_at)
-VALUES ('Сухие смеси', null, 'sukhie-smesi', now(), now()),
-       ('Шпатлёвка', 1, 'shpatlevka', now(), now()),
-       ('Штукатурка', 1, 'shtukaturka', now(), now()),
-       ('Эмали', null, 'emali', now(), now()),
-       ('Эмали по ржавчине', 4, 'emali-po-rzhavchine', now(), now()),
-       ('Акриловые эмали', 4, 'emali-akrilovie', now(), now()),
-       ('Кисти', null, 'kisti', now(), now());
+INSERT INTO categories(name, parent_id, slug, image_url, created_at, updated_at)
+VALUES ('Сухие смеси', null, 'sukhie-smesi', '/images/categories/sukhiesmesi.jpg', now(), now()),
+       ('Шпатлёвка', 1, 'shpatlevka', '/images/categories/shpatlevka.jpg', now(), now()),
+       ('Штукатурка', 1, 'shtukaturka','/images/categories/shtukaturka.jpg', now(), now()),
+       ('Эмали', null, 'emali', '/images/categories/emali.jpg', now(), now()),
+       ('Эмали по ржавчине', 4, 'emali-po-rzhavchine', '/images/categories/po-rzhavchine.jpg', now(), now()),
+       ('Акриловые эмали', 4, 'emali-akrilovie', '/images/categories/akrilovie.jpg', now(), now()),
+       ('Кисти', null, 'kisti', '/images/categories/kisti.jpg', now(), now());
 
 INSERT INTO products(name, slug, description, category_id, price_per_unit, quantity, image_url, created_at, updated_at)
 VALUES ('Шпатлёвка полимерная VETONIT 20кг', 'shpatlevka-polimernaya-vetonit-20-kg',
@@ -175,7 +176,7 @@ VALUES ('Шпатлёвка полимерная VETONIT 20кг', 'shpatlevka-po
         5, 561.99, 400, '/images/emali/po-rzhavchine/lakra3v1ml800.jpg', now(), now()),
        ('Эмаль акриловая универсальная ЛАКРА PROF IT матовая база А 0,9 кг', 'emal-akrilovaya-lakra-profi-900-ml',
         'Высококачественная водоразбавляемая эмаль на основе акриловой дисперсии для внутренних и наружных работ. Предназначена для окраски минеральных и деревянных поверхностей, не подвергающихся плотному соприкосновению (отсутствие последующего контакта окрашенных поверхностей между собой). Обладает отличной укрывистостью и адгезией к большинству строительных материалов. Может применяться как фасадная или интерьерная краска, в том числе для окрашивания обоев. Быстро высыхает. Создает прочное влагостойкое, атмосферостойкое, паропроницаемое и светостойкое покрытие. Не желтеет со временем. Отличается высокими декоративными и защитными свойствами, стойкая к мытью.',
-        6, 605.99, 250, '/images/emali/akrilovie/lakra3v1ml800.jpg', now(), now()),
+        6, 605.99, 250, '/images/emali/akrilovie/lakraprofi900ml.jpg', now(), now()),
        ('Кисть плоская KORVUS 50 мм натуральная щетина пластиковая ручка', 'kist-korvus-50-mm',
         'Плоская кисть KORVUS, натуральная щетина, пластиковая рукоятка имеет классическое исполнение и подойдет для окрашивания наружных и внутренних поверхностей. Применяется для нанесения красок, эмалей, лаков и других лакокрасочных материалов на различные поверхности. Пластиковая рукоятка оснащена отверстием для подвески. Натуральная щетина обеспечивает отличные краскообменные свойства кисти.',
         7, 44.00, 5000, '/images/kisti/korvus50mm.jpg', now(), now());
