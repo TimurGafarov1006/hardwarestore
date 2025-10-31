@@ -3,35 +3,85 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/auth/login.css" />
 </head>
 <body>
-    <c:if test="${not empty error}">
-        <div class="error-message">
-            <h4>Ошибка регистрации</h4>
-            <p>${error}</p>
+    <div class="login-container">
+        <div class="login-card">
+            <h1 class="login-title">Регистрация</h1>
+
+            <c:if test="${not empty error}">
+                <div class="error-message">
+                    <p>${error}</p>
+                </div>
+            </c:if>
+
+            <form action="${pageContext.request.contextPath}/sign-up" method="post">
+                <div class="form-group">
+                    <label for="first_name">Имя</label>
+                    <input type="text"
+                           id="first_name"
+                           name="first_name"
+                           placeholder="Иван"
+                           value="${param.first_name}"
+                           required />
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">Фамилия</label>
+                    <input type="text"
+                           id="last_name"
+                           name="last_name"
+                           placeholder="Иванов"
+                           value="${param.last_name}"
+                           required />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Электронная почта</label>
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           placeholder="your@email.com"
+                           value="${param.email}"
+                           required />
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Телефон</label>
+                    <input type="tel"
+                           id="phone"
+                           name="phone"
+                           placeholder="+79012345678"
+                           value="${param.phone}"
+                           required />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           placeholder="Не менее 8 символов и 1 заглавной латинской буквы"
+                           required />
+                </div>
+
+                <div class="form-group">
+                    <label for="birthday">Дата рождения</label>
+                    <input type="date"
+                           id="birthday"
+                           name="birthday"
+                           value="${param.birthday}" />
+                </div>
+
+                <button type="submit" class="submit-btn">Зарегистрироваться</button>
+            </form>
+
+            <div class="signup-link">
+                <p>Уже есть аккаунт?</p>
+                <a href="${pageContext.request.contextPath}/login">Войти</a>
+            </div>
         </div>
-    </c:if>
-
-    <form action="${pageContext.request.contextPath}/sign-up" method="post">
-        <label for="first_name">Имя</label>
-        <input type="text" name="first_name" id="first_name" placeholder="Иван" required value="${param.first_name}"/>
-
-        <label for="last_name">Фамилия</label>
-        <input type="text" name="last_name" id="last_name" placeholder="Иванов" required value="${param.last_name}"/>
-
-        <label for="password">Пароль</label>
-        <input type="password" name="password" id="password" placeholder="Не менее 8 символов и 1 заглавной латинской буквы" required/>
-
-        <label for="phone">Телефон</label>
-        <input type="tel" name="phone" id="phone" placeholder="+79012345678" required value="${param.phone}"/>
-
-        <label for="email">Электронная почта</label>
-        <input type="email" name="email" id="email" placeholder="your@email.com" required value="${param.email}"/>
-
-        <label for="birthday">Дата рождения</label>
-        <input type="date" name="birthday" id="birthday"/>
-
-        <button type="submit">Зарегистрироваться</button>
-    </form>
+    </div>
 </body>
 </html>
