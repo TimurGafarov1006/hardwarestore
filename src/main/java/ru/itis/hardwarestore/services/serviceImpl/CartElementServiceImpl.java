@@ -1,6 +1,7 @@
 package ru.itis.hardwarestore.services.serviceImpl;
 
-import ru.itis.hardwarestore.exceptions.CartException;
+import ru.itis.hardwarestore.exceptions.app.CartElementException;
+import ru.itis.hardwarestore.exceptions.app.CartException;
 import ru.itis.hardwarestore.models.CartElement;
 import ru.itis.hardwarestore.models.Product;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.CartElementRepository;
@@ -45,7 +46,12 @@ public class CartElementServiceImpl implements CartElementService {
         if (cartElement.getId() != null && cartElementRepository.findById(cartElement.getId()).isPresent()) {
             cartElementRepository.update(cartElement);
         } else {
-            cartElementRepository.save(cartElement);
+            try {
+                cartElementRepository.save(cartElement);
+            } catch (CartElementException e) {
+
+            }
+
         }
     }
 

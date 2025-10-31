@@ -1,5 +1,6 @@
 package ru.itis.hardwarestore.repositories.repositoryImpl;
 
+import ru.itis.hardwarestore.exceptions.app.CartElementException;
 import ru.itis.hardwarestore.models.CartElement;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.CartElementRepository;
 import ru.itis.hardwarestore.utils.PropertiesUtil;
@@ -38,7 +39,7 @@ public class CartElementRepositoryJdbc implements CartElementRepository {
 
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new CartElementException(e.getMessage());
         }
     }
 
