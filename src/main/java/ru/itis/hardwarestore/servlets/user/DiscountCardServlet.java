@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.itis.hardwarestore.exceptions.DiscountCardException;
+import ru.itis.hardwarestore.exceptions.app.DiscountCardException;
 import ru.itis.hardwarestore.models.DiscountCard;
 import ru.itis.hardwarestore.services.serviceInterfaces.DiscountCardService;
 

@@ -1,12 +1,11 @@
 package ru.itis.hardwarestore.filters;
 
-import com.oracle.wls.shaded.org.apache.xpath.operations.Or;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.itis.hardwarestore.exceptions.OrderNotFoundException;
+import ru.itis.hardwarestore.exceptions.user.OrderNotFoundException;
 import ru.itis.hardwarestore.models.Order;
 import ru.itis.hardwarestore.services.serviceInterfaces.OrderService;
 

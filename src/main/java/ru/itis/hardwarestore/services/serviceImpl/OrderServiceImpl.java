@@ -1,7 +1,7 @@
 package ru.itis.hardwarestore.services.serviceImpl;
 
-import ru.itis.hardwarestore.exceptions.DiscountCardException;
-import ru.itis.hardwarestore.exceptions.OrderNotFoundException;
+import ru.itis.hardwarestore.exceptions.app.DiscountCardException;
+import ru.itis.hardwarestore.exceptions.user.OrderNotFoundException;
 import ru.itis.hardwarestore.models.*;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.OrderListRepository;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.OrderRepository;

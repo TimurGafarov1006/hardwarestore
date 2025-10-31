@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.itis.hardwarestore.exceptions.UnauthorizedException;
+import ru.itis.hardwarestore.exceptions.app.UnauthorizedException;
 import ru.itis.hardwarestore.models.User;
 import ru.itis.hardwarestore.services.serviceInterfaces.UserService;
 

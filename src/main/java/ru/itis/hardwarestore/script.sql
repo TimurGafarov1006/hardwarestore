@@ -100,7 +100,8 @@ CREATE TABLE cart_elements (
     -------------------------
                                CONSTRAINT cart_elements_id_pk PRIMARY KEY (id),
                                CONSTRAINT cart_elements_user_id_fk FOREIGN KEY (user_id) REFERENCES users(id),
-                               CONSTRAINT cart_elements_product_id_fk FOREIGN KEY (product_id) REFERENCES products(id)
+                               CONSTRAINT cart_elements_product_id_fk FOREIGN KEY (product_id) REFERENCES products(id),
+    CONSTRAINT cart_elements_user_and_product_id_uk UNIQUE (user_id, product_id)
 );
 
 CREATE TABLE orders (

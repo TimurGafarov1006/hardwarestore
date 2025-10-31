@@ -1,6 +1,6 @@
 package ru.itis.hardwarestore.services.serviceImpl;
 
-import ru.itis.hardwarestore.exceptions.CategoryNotFoundException;
+import ru.itis.hardwarestore.exceptions.user.CategoryNotFoundException;
 import ru.itis.hardwarestore.models.Category;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.CategoryRepository;
 import ru.itis.hardwarestore.services.serviceInterfaces.CategoryService;

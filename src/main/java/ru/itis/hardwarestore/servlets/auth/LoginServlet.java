@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.itis.hardwarestore.exceptions.LoginValidateException;
+import ru.itis.hardwarestore.exceptions.user.LoginValidateException;
 import ru.itis.hardwarestore.services.serviceInterfaces.AuthService;
 import ru.itis.hardwarestore.utils.CookieUtils;
 

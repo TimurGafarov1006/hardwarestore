@@ -1,6 +1,6 @@
 package ru.itis.hardwarestore.services.serviceImpl;
 
-import ru.itis.hardwarestore.exceptions.ProductNotFoundException;
+import ru.itis.hardwarestore.exceptions.user.ProductNotFoundException;
 import ru.itis.hardwarestore.models.Product;
 import ru.itis.hardwarestore.repositories.repositoryInterfaces.ProductRepository;
 import ru.itis.hardwarestore.services.serviceInterfaces.ProductService;

@@ -1,6 +1,6 @@
 package ru.itis.hardwarestore.services.serviceImpl;
 
-import ru.itis.hardwarestore.exceptions.DiscountCardException;
+import ru.itis.hardwarestore.exceptions.app.DiscountCardException;
 import ru.itis.hardwarestore.models.DiscountCard;
 import ru.itis.hardwarestore.models.enums.CardStatus;
 import ru.itis.hardwarestore.models.enums.CardType;
