@@ -14,6 +14,7 @@ public class Category {
     private String name;
     private Integer parentId;
     private String slug;
+    private String imageUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

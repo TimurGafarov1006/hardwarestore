@@ -3,8 +3,8 @@ package ru.itis.hardwarestore.repositories.queries;
 public class CategoryQueries {
     public static final String SAVE_SQL = """
             INSERT
-            INTO categories (name, parent_id, slug, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?)
+            INTO categories (name, parent_id, slug, image_url, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?)
             """;
     public static final String FIND_ALL_SQL = """
             SELECT *
@@ -30,6 +30,7 @@ public class CategoryQueries {
             SET name = ?,
                 parent_id = ?,
                 slug = ?,
+                image_url = ?,
                 updated_at = ?
             WHERE id = ?
             """;

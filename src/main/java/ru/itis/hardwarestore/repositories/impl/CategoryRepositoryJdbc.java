@@ -35,8 +35,9 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
             statement.setString(1, category.getName());
             statement.setInt(2, category.getId());
             statement.setString(3, category.getSlug());
-            statement.setObject(4, category.getCreatedAt(), Types.TIMESTAMP);
-            statement.setObject(5, category.getUpdatedAt(), Types.TIMESTAMP);
+            statement.setString(4, category.getImageUrl());
+            statement.setObject(5, category.getCreatedAt(), Types.TIMESTAMP);
+            statement.setObject(6, category.getUpdatedAt(), Types.TIMESTAMP);
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -52,7 +53,8 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
             statement.setString(1, category.getName());
             statement.setInt(2, category.getId());
             statement.setString(3, category.getSlug());
-            statement.setObject(4, category.getCreatedAt(), Types.TIMESTAMP);
+            statement.setString(4, category.getImageUrl());
+            statement.setObject(5, category.getCreatedAt(), Types.TIMESTAMP);
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -86,6 +88,7 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
                         resultSet.getString("name"),
                         resultSet.getInt("parent_id"),
                         resultSet.getString("slug"),
+                        resultSet.getString("image_url"),
                         resultSet.getTimestamp("created_at").toLocalDateTime(),
                         resultSet.getTimestamp("updated_at").toLocalDateTime()
                 );
@@ -113,13 +116,13 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
             }
 
             ResultSet resultSet = statement.executeQuery();
-
             while (resultSet.next()) {
                 Category category = new Category(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         parentId != null ? resultSet.getInt("parent_id") : null,
                         resultSet.getString("slug"),
+                        resultSet.getString("image_url"),
                         resultSet.getTimestamp("created_at").toLocalDateTime(),
                         resultSet.getTimestamp("updated_at").toLocalDateTime()
                 );
@@ -138,7 +141,6 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_SQL))
         {
             statement.setInt(1, id);
-
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 Category category = new Category(
@@ -146,6 +148,7 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
                         resultSet.getString("name"),
                         resultSet.getInt("parent_id") != 0 ? resultSet.getInt("parent_id") : null,
                         resultSet.getString("slug"),
+                        resultSet.getString("image_url"),
                         resultSet.getTimestamp("created_at").toLocalDateTime(),
                         resultSet.getTimestamp("updated_at").toLocalDateTime()
                 );
@@ -167,7 +170,6 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_SLUG_SQL))
         {
             statement.setString(1, slug);
-
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 Category category = new Category(
@@ -175,6 +177,7 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
                         resultSet.getString("name"),
                         resultSet.getInt("parent_id") != 0 ? resultSet.getInt("parent_id") : null,
                         resultSet.getString("slug"),
+                        resultSet.getString("image_url"),
                         resultSet.getTimestamp("created_at").toLocalDateTime(),
                         resultSet.getTimestamp("updated_at").toLocalDateTime()
                 );
