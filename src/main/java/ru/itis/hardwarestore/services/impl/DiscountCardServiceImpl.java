@@ -40,7 +40,6 @@ public class DiscountCardServiceImpl implements DiscountCardService {
     @Override
     public void upgradeDiscountCard(String userId) {
         Optional<DiscountCard> oldDiscountCard = discountCardRepository.findByUserId(userId);
-
         if (oldDiscountCard.isPresent()) {
             if (oldDiscountCard.get().getCardType().getId() < 3) {
                 DiscountCard newDiscountCard = new DiscountCard(
@@ -64,7 +63,6 @@ public class DiscountCardServiceImpl implements DiscountCardService {
     @Override
     public DiscountCard getDiscountCard(String userId) {
         Optional<DiscountCard> oldDiscountCard = discountCardRepository.findByUserId(userId);
-
         if (oldDiscountCard.isPresent()) {
             return oldDiscountCard.get();
         } else {

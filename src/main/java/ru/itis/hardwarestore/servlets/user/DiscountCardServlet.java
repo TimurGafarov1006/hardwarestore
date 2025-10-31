@@ -24,7 +24,6 @@ public class DiscountCardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userId = (String) req.getAttribute("userId");
         DiscountCard discountCard;
-
         try {
             discountCard = discountCardService.getDiscountCard(userId);
         } catch (DiscountCardException e) {

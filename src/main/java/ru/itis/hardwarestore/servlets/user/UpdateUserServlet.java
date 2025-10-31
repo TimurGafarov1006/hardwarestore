@@ -27,7 +27,6 @@ public class UpdateUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userId = (String) req.getAttribute("userId");
-
         try {
             User user = userService.getUser(userId);
             LocalDate birthday = user.getBirthday();
@@ -46,26 +45,23 @@ public class UpdateUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User oldUser = userService.getUser((String) req.getAttribute("userId"));
-
         String firstName = req.getParameter("first_name");
-
         String lastName = req.getParameter("last_name");
-
         // если пользак ввел что-то в форму, то будем передавать этот параметр, иначе null
         String password = (req.getParameter("password") != null && !req.getParameter("password").isBlank())
-                ? req.getParameter("password") : null;
-
+                ? req.getParameter("password")
+                : null;
         // если пользак не ввел ничего и в форме остался старый параметр - передаем null, иначе новый параметр
         String phone = (req.getParameter("phone").equals(oldUser.getPhone()))
-                ? null : req.getParameter("phone");
-
+                ? null
+                : req.getParameter("phone");
         String email = (req.getParameter("email").equals(oldUser.getEmail()))
-                ? null : req.getParameter("email");
-
+                ? null
+                : req.getParameter("email");
         // если пользак не выбрал ДР - то null, иначе либо ДР при регистрации, либо только что введённый
         LocalDate birthday = (req.getParameter("birthday") != null && !req.getParameter("birthday").isBlank())
-                ? LocalDate.parse(req.getParameter("birthday")) : null;
-
+                ? LocalDate.parse(req.getParameter("birthday"))
+                : null;
         //проверка на то, обновил ли пользователь хоть один параметр
         if (! (firstName.equals(oldUser.getFirstName()) &&
                 lastName.equals(oldUser.getLastName()) &&

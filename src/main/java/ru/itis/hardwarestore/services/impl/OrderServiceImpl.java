@@ -91,19 +91,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Map<Order, Map<Product, Integer>> getOrderContent(Integer orderId) {
-        Optional<Order> orderOptional = orderRepository.findById(orderId);
         Map<Order, Map<Product, Integer>> result = new HashMap<>();
-
+        Optional<Order> orderOptional = orderRepository.findById(orderId);
         if (orderOptional.isPresent()) {
             Order order = orderOptional.get();
             Map<Product, Integer> products = new HashMap<>();
-
             for (OrderList orderList : orderListRepository.findAllByOrderId(orderId)) {
                 Product product = productService.getProduct(orderList.getProductId());
                 products.put(product, orderList.getQuantity());
             }
             result.put(order, products);
-
             return result;
         } else {
             throw new OrderNotFoundException(orderId);
@@ -113,7 +110,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order getOrder(Integer orderId) {
         Optional<Order> orderOptional = orderRepository.findById(orderId);
-
         if (orderOptional.isPresent()) {
             return orderOptional.get();
         } else {

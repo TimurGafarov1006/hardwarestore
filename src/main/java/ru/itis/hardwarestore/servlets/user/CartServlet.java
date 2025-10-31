@@ -37,10 +37,9 @@ public class CartServlet extends HttpServlet {
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(json);
-        boolean redirectAfter = node.has("redirectAfter") && node.get("redirectAfter").asBoolean();
-
         cartElementService.addOrUpdate(cartElement);
 
+        boolean redirectAfter = node.has("redirectAfter") && node.get("redirectAfter").asBoolean();
         if (redirectAfter) {
             resp.setContentType("application/json; charset=UTF-8");
             resp.getWriter().write("{\"redirect\": \"" + req.getContextPath() + "/cart\"}");

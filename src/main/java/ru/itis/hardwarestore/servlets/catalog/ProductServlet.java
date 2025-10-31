@@ -32,7 +32,6 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
-
         if (pathInfo == null || pathInfo.equals("/") || pathInfo.isEmpty()) {
             resp.sendRedirect(req.getContextPath() + "/catalog");
         }

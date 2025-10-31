@@ -26,7 +26,6 @@ public class CabinetServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userId = (String) req.getAttribute("userId");
-
         try {
             User user = userService.getUser(userId);
             LocalDate birthday = user.getBirthday();

@@ -18,7 +18,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category getCategory(int categoryId) {
         Optional<Category> category = categoryRepository.findById(categoryId);
-
         if (category.isPresent()) {
             return category.get();
         } else {
@@ -34,7 +33,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category getCategoryBySlug(String slug) {
         Optional<Category> category = categoryRepository.findBySlug(slug);
-
         if (category.isPresent()) {
             return category.get();
         } else {

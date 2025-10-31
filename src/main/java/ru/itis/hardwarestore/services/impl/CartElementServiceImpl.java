@@ -26,7 +26,6 @@ public class CartElementServiceImpl implements CartElementService {
     public CartElement getCartElement(Integer id) {
         if (id != null) {
             Optional<CartElement> cartElement = cartElementRepository.findById(id);
-
             if (cartElement.isPresent()) {
                 return cartElement.get();
             } else {
@@ -51,7 +50,6 @@ public class CartElementServiceImpl implements CartElementService {
             } catch (CartElementException e) {
 
             }
-
         }
     }
 
@@ -73,11 +71,6 @@ public class CartElementServiceImpl implements CartElementService {
     @Override
     public boolean isProductInCart(String userId, int productId) {
         Optional<CartElement> cartElementOptional = cartElementRepository.findByUserAndProductId(userId, productId);
-
-        if (cartElementOptional.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
+        return cartElementOptional.isPresent();
     }
 }

@@ -23,15 +23,13 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String pathInfo = req.getPathInfo();
         String userId = (String) req.getAttribute("userId");
-
+        String pathInfo = req.getPathInfo();
         if (pathInfo == null || pathInfo.equals("/") || pathInfo.isEmpty()) {
             req.setAttribute("orders", orderService.getOrders(userId));
             req.getRequestDispatcher("/WEB-INF/views/user/orders.jsp").forward(req, resp);
         } else {
             Integer orderId = Integer.parseInt(pathInfo.substring(1));
-
             Map<Order, Map<Product, Integer>> orderData = orderService.getOrderContent(orderId);
             Map.Entry<Order, Map<Product, Integer>> entry = orderData.entrySet().iterator().next();
 

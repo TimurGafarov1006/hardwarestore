@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String userId) {
         Optional<User> userOptional = userRepository.findById(userId);
-
         if (userOptional.isPresent()) {
             return userOptional.get();
         } else {
@@ -37,8 +36,9 @@ public class UserServiceImpl implements UserService {
     {
         String passwordHash = oldUser.getPasswordHash();
         String salt = oldUser.getSalt();
-        String normalizedNewPhone =
-                newPhone == null ? null : PhoneUtils.normalizePhone(newPhone);
+        String normalizedNewPhone = newPhone == null
+                ? null
+                : PhoneUtils.normalizePhone(newPhone);
 
         if (newPassword != null) {
             salt = UUID.randomUUID().toString();
@@ -50,13 +50,23 @@ public class UserServiceImpl implements UserService {
         User updatedUser = new User(
                 oldUser.getId(),
                 oldUser.getRole(),
-                newFirstName != null ? newFirstName : oldUser.getFirstName(),
-                newLastName != null ? newLastName : oldUser.getLastName(),
+                newFirstName != null
+                        ? newFirstName
+                        : oldUser.getFirstName(),
+                newLastName != null
+                        ? newLastName
+                        : oldUser.getLastName(),
                 passwordHash,
                 salt,
-                normalizedNewPhone != null ? normalizedNewPhone : oldUser.getPhone(),
-                newEmail != null ? newEmail : oldUser.getEmail(),
-                birthday != null ? birthday : oldUser.getBirthday(),
+                normalizedNewPhone != null
+                        ? normalizedNewPhone
+                        : oldUser.getPhone(),
+                newEmail != null
+                        ? newEmail
+                        : oldUser.getEmail(),
+                birthday != null
+                        ? birthday
+                        : oldUser.getBirthday(),
                 oldUser.getCreatedAt(),
                 LocalDateTime.now()
         );

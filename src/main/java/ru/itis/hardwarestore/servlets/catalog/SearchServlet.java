@@ -25,9 +25,8 @@ public class SearchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String query = req.getParameter("query");
         List<Product> results = new ArrayList<>();
-
+        String query = req.getParameter("query");
         if (query != null && !query.isEmpty()) {
             String lowerQuery = query.toLowerCase();
             for (Product product : productService.getProductsLikeName(lowerQuery)) {

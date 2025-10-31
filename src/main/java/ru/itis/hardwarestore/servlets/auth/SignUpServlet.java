@@ -37,14 +37,14 @@ public class SignUpServlet extends HttpServlet {
         String phone = req.getParameter("phone");
         String email = req.getParameter("email");
         LocalDate birthday = (req.getParameter("birthday") != null && !req.getParameter("birthday").isBlank())
-                ? LocalDate.parse(req.getParameter("birthday")) : null;
+                ? LocalDate.parse(req.getParameter("birthday"))
+                : null;
 
         String sessionId = null;
 
         try {
             sessionId = authService.registerUser(firstName, lastName, password, phone, email, birthday);
         } catch (RegistrationValidateException e) {
-            //TODO сделать живую валидацию через js
             req.setAttribute("error", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/auth/registration.jsp").forward(req, resp);
         }

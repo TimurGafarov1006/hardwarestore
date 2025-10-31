@@ -18,7 +18,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProduct(int productId) {
         Optional<Product> product = productRepository.findById(productId);
-
         if (product.isPresent()) {
             return product.get();
         } else {
@@ -34,7 +33,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductBySlug(String slug) {
         Optional<Product> product = productRepository.findBySlug(slug);
-
         if (product.isPresent()) {
             return product.get();
         } else {

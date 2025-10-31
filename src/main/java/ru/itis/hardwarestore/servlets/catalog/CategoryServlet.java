@@ -25,7 +25,6 @@ public class CategoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo();
-
         if (pathInfo == null || pathInfo.equals("/") || pathInfo.isEmpty()) {
             req.setAttribute("categories", categoryService.getChildrenCategories(null));
             req.getRequestDispatcher("/WEB-INF/views/catalog/categories.jsp").forward(req, resp);
@@ -33,12 +32,10 @@ public class CategoryServlet extends HttpServlet {
 
         String categorySlug = pathInfo.substring(1).split("/")[0];
         Category category = categoryService.getCategoryBySlug(categorySlug);
-
         if (category.getParentId() != null) {
             Category prevCategory = categoryService.getCategory(category.getParentId());
             req.setAttribute("prevCategory", prevCategory);
         }
-
         if (categoryService.getChildrenCategories(category.getId()).isEmpty()) {
             req.setAttribute("products", productService.getCategoryProducts(category.getId()));
             req.getRequestDispatcher("/WEB-INF/views/catalog/products.jsp").forward(req, resp);
