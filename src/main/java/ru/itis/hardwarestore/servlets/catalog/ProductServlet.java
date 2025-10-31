@@ -7,10 +7,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.itis.hardwarestore.models.Category;
 import ru.itis.hardwarestore.models.Product;
-import ru.itis.hardwarestore.services.serviceInterfaces.CartElementService;
-import ru.itis.hardwarestore.services.serviceInterfaces.CategoryService;
-import ru.itis.hardwarestore.services.serviceInterfaces.ProductService;
-import ru.itis.hardwarestore.services.serviceInterfaces.UserService;
+import ru.itis.hardwarestore.services.interfaces.CartElementService;
+import ru.itis.hardwarestore.services.interfaces.CategoryService;
+import ru.itis.hardwarestore.services.interfaces.ProductService;
+import ru.itis.hardwarestore.services.interfaces.UserService;
 
 import java.io.IOException;
 

@@ -6,7 +6,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.itis.hardwarestore.repositories.repositoryInterfaces.SessionRepository;
+import ru.itis.hardwarestore.repositories.interfaces.SessionRepository;
 import ru.itis.hardwarestore.utils.CookieUtils;
 
 import java.io.IOException;

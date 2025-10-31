@@ -3,10 +3,10 @@ package ru.itis.hardwarestore.listeners;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
-import ru.itis.hardwarestore.repositories.repositoryImpl.*;
-import ru.itis.hardwarestore.repositories.repositoryInterfaces.*;
-import ru.itis.hardwarestore.services.serviceImpl.*;
-import ru.itis.hardwarestore.services.serviceInterfaces.*;
+import ru.itis.hardwarestore.repositories.impl.*;
+import ru.itis.hardwarestore.repositories.interfaces.*;
+import ru.itis.hardwarestore.services.impl.*;
+import ru.itis.hardwarestore.services.interfaces.*;
 import ru.itis.hardwarestore.utils.PropertiesUtil;
 
 import java.time.Duration;

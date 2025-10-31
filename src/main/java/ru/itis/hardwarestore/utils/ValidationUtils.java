@@ -1,8 +1,8 @@
 package ru.itis.hardwarestore.utils;
 
 import ru.itis.hardwarestore.exceptions.user.RegistrationValidateException;
-import ru.itis.hardwarestore.repositories.repositoryImpl.UserRepositoryJdbc;
-import ru.itis.hardwarestore.repositories.repositoryInterfaces.UserRepository;
+import ru.itis.hardwarestore.repositories.impl.UserRepositoryJdbc;
+import ru.itis.hardwarestore.repositories.interfaces.UserRepository;
 
 import java.util.regex.Pattern;
 

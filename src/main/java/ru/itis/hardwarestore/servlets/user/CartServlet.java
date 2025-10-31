@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.itis.hardwarestore.models.CartElement;
-import ru.itis.hardwarestore.services.serviceInterfaces.CartElementService;
+import ru.itis.hardwarestore.services.interfaces.CartElementService;
 import ru.itis.hardwarestore.utils.JacksonUtils;
 
 import java.io.BufferedReader;

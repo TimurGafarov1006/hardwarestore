@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.itis.hardwarestore.models.Session;
-import ru.itis.hardwarestore.repositories.repositoryInterfaces.SessionRepository;
+import ru.itis.hardwarestore.repositories.interfaces.SessionRepository;
 import ru.itis.hardwarestore.utils.CookieUtils;
 
 import java.io.IOException;

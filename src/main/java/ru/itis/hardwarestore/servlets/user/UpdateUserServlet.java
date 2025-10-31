@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import ru.itis.hardwarestore.exceptions.user.RegistrationValidateException;
 import ru.itis.hardwarestore.exceptions.app.UnauthorizedException;
 import ru.itis.hardwarestore.models.User;
-import ru.itis.hardwarestore.services.serviceInterfaces.UserService;
+import ru.itis.hardwarestore.services.interfaces.UserService;
 
 import java.io.IOException;
 import java.time.LocalDate;

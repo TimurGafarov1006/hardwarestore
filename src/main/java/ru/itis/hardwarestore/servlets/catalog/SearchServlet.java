@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.itis.hardwarestore.models.Product;
-import ru.itis.hardwarestore.services.serviceInterfaces.ProductService;
+import ru.itis.hardwarestore.services.interfaces.ProductService;
 import ru.itis.hardwarestore.utils.JacksonUtils;
 
 import java.io.IOException;

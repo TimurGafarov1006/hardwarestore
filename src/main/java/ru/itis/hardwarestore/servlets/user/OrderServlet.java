@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.itis.hardwarestore.models.Order;
 import ru.itis.hardwarestore.models.Product;
-import ru.itis.hardwarestore.services.serviceInterfaces.OrderService;
+import ru.itis.hardwarestore.services.interfaces.OrderService;
 
 import java.io.IOException;
 import java.util.Map;
