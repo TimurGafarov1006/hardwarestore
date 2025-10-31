@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags/user" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -49,8 +50,16 @@
 
                 <div class="form-group">
                     <label for="birthday">Дата рождения:</label>
-                    <input type="date" name="birthday" id="birthday"
-                           value="<fmt:formatDate value='${user.birthday}' pattern='yyyy-MM-dd' />" />
+                    <c:choose>
+                        <c:when test="${not empty userBirthday}">
+                            <input type="date" name="birthday" id="birthday"
+                                   value="<fmt:formatDate value='${userBirthday}' pattern='yyyy-MM-dd' />"
+                                   readonly />
+                        </c:when>
+                        <c:otherwise>
+                            <input type="date" name="birthday" id="birthday" />
+                        </c:otherwise>
+                    </c:choose>
                 </div>
 
                 <div class="form-actions">

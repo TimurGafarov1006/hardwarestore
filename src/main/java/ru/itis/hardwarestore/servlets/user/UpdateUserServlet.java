@@ -12,6 +12,8 @@ import ru.itis.hardwarestore.services.serviceInterfaces.UserService;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 @WebServlet("/cabinet/update")
 public class UpdateUserServlet extends HttpServlet {
@@ -27,7 +29,13 @@ public class UpdateUserServlet extends HttpServlet {
         String userId = (String) req.getAttribute("userId");
 
         try {
-            req.setAttribute("user", userService.getUser(userId));
+            User user = userService.getUser(userId);
+            LocalDate birthday = user.getBirthday();
+            Date birthdayAsUtilDate = (birthday != null)
+                    ? (Date) Date.from(birthday.atStartOfDay(ZoneId.systemDefault()).toInstant())
+                    : null;
+            req.setAttribute("user", user);
+            req.setAttribute("userBirthday", birthdayAsUtilDate);
         } catch (UnauthorizedException e) {
             resp.sendRedirect(req.getContextPath() + "/login");
         }
