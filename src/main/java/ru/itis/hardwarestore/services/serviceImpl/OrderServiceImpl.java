@@ -85,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Map<Order, Map<Product, Integer>> getOrder(Integer orderId) {
+    public Map<Order, Map<Product, Integer>> getOrderContent(Integer orderId) {
         Optional<Order> orderOptional = orderRepository.findById(orderId);
         Map<Order, Map<Product, Integer>> result = new HashMap<>();
 
@@ -100,6 +100,17 @@ public class OrderServiceImpl implements OrderService {
             result.put(order, products);
 
             return result;
+        } else {
+            throw new OrderNotFoundException(orderId);
+        }
+    }
+
+    @Override
+    public Order getOrder(Integer orderId) {
+        Optional<Order> orderOptional = orderRepository.findById(orderId);
+
+        if (orderOptional.isPresent()) {
+            return orderOptional.get();
         } else {
             throw new OrderNotFoundException(orderId);
         }

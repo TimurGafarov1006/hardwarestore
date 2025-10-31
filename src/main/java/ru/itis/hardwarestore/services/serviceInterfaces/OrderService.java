@@ -9,5 +9,6 @@ import java.util.Map;
 public interface OrderService {
     void createOrder(String userId);
     List<Order> getOrders(String userId);
-    Map<Order, Map<Product, Integer>> getOrder(Integer orderId);
+    Map<Order, Map<Product, Integer>> getOrderContent(Integer orderId);
+    Order getOrder(Integer orderId);
 }
