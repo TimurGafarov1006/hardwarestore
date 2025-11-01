@@ -42,15 +42,8 @@ public class DiscountCardServiceImpl implements DiscountCardService {
         Optional<DiscountCard> oldDiscountCard = discountCardRepository.findByUserId(userId);
         if (oldDiscountCard.isPresent()) {
             if (oldDiscountCard.get().getCardType().getId() < 3) {
-                DiscountCard newDiscountCard = new DiscountCard(
-                        oldDiscountCard.get().getId(),
-                        oldDiscountCard.get().getUserId(),
-                        oldDiscountCard.get().getCardNo(),
-                        CardType.fromId(oldDiscountCard.get().getCardType().getId() + 1),
-                        oldDiscountCard.get().getCardStatus(),
-                        oldDiscountCard.get().getCreatedAt(),
-                        LocalDateTime.now()
-                );
+                DiscountCard newDiscountCard = oldDiscountCard.get();
+                newDiscountCard.setCardType(CardType.fromId(oldDiscountCard.get().getCardType().getId() + 1));
                 discountCardRepository.update(newDiscountCard);
             } else {
                 throw new DiscountCardException("Discount card has max level");

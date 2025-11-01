@@ -99,6 +99,7 @@ public class OrderServiceImpl implements OrderService {
             cartElementService.deleteProduct(cartElement);
         }
 
+        // т.к я делал только юзерский UI, решил агрейдить карту сразу не после завершения заказа
         List<Order> userOrders = orderRepository.findAllByUserId(userId);
         if (userOrders.size() == 5 || userOrders.size() == 20) {
             discountCardService.upgradeDiscountCard(userId);

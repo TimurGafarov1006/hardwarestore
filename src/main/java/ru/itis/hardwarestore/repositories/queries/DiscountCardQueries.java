@@ -21,7 +21,7 @@ public class DiscountCardQueries {
             SET card_type_id = ?,
                 status = ?,
                 updated_at = ?
-            WHERE id = ?
+            WHERE user_id = ?
             """;
     public static final String DELETE_SQL = """
             DELETE FROM discount_cards
