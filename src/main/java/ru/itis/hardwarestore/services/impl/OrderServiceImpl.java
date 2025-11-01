@@ -101,6 +101,13 @@ public class OrderServiceImpl implements OrderService {
 
         // т.к я делал только юзерский UI, решил агрейдить карту сразу не после завершения заказа
         List<Order> userOrders = orderRepository.findAllByUserId(userId);
+        Iterator<Order> iterator = userOrders.iterator();
+        while (iterator.hasNext()) {
+            Order someOrder = iterator.next();
+            if (someOrder.getDiscountAmount() == 0) {
+                iterator.remove();
+            }
+        }
         if (userOrders.size() == 5 || userOrders.size() == 20) {
             discountCardService.upgradeDiscountCard(userId);
         }
