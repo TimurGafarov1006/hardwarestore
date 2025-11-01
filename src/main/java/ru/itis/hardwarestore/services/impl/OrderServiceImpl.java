@@ -2,6 +2,7 @@ package ru.itis.hardwarestore.services.impl;
 
 import ru.itis.hardwarestore.exceptions.app.DiscountCardException;
 import ru.itis.hardwarestore.exceptions.user.OrderNotFoundException;
+import ru.itis.hardwarestore.exceptions.user.ProductNotFoundException;
 import ru.itis.hardwarestore.models.*;
 import ru.itis.hardwarestore.repositories.interfaces.OrderListRepository;
 import ru.itis.hardwarestore.repositories.interfaces.OrderRepository;
@@ -30,10 +31,28 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void createOrder(String userId) {
+        List<CartElement> cartElements = cartElementService.getUserCart(userId);
+        if (cartElements.isEmpty()) {
+            throw new IllegalStateException("Cannot create order: cart is empty");
+        }
+        // проверяем наличие товаров и считаем сумму
+        double amountBeforeDiscount = 0;
+        for (CartElement cartElement : cartElements) {
+            Product product = productService.getProduct(cartElement.getProductId());
+            int requestedQty = cartElement.getQuantity();
+            if (product.getQuantity() < requestedQty) {
+                throw new ProductNotFoundException(
+                        "Not enough stock for product '%s'. Available: %d, requested: %d"
+                                .formatted(product.getName(), product.getQuantity(), requestedQty)
+                );
+            }
+            amountBeforeDiscount += requestedQty * product.getPricePerUnit();
+        }
+
         Order order = new Order(
                 null,
                 userId,
-                0,
+                amountBeforeDiscount,
                 0,
                 0,
                 LocalDateTime.now(),
@@ -41,39 +60,41 @@ public class OrderServiceImpl implements OrderService {
                 null
         );
         Integer orderId = orderRepository.save(order);
+        if (orderId == null) {
+            throw new RuntimeException("Failed to save order");
+        }
 
-        double amountBeforeDiscount = 0;
-        double discountAmount = 0;
-        double totalAmount = 0;
-
-        List<OrderList> orderLists = new ArrayList<>();
-        List<CartElement> cartElements = cartElementService.getUserCart(userId);
-        for (CartElement cartElement: cartElements) {
-            Product product = productService.getProduct(cartElement.getProductId());
-            amountBeforeDiscount += cartElement.getQuantity() * product.getPricePerUnit();
-
+        for (CartElement cartElement : cartElements) {
             OrderList orderList = new OrderList(orderId, cartElement.getProductId(), cartElement.getQuantity());
-            orderLists.add(orderList);
             orderListRepository.save(orderList);
         }
 
+        double discountAmount = 0;
         try {
             DiscountCard discountCard = discountCardService.getDiscountCard(userId);
-            discountAmount = amountBeforeDiscount * discountCard.getCardType().getDiscountPercent() / 100;
+            discountAmount = amountBeforeDiscount * discountCard.getCardType().getDiscountPercent() / 100.0;
         } catch (DiscountCardException e) {
-            discountAmount = 0;
+
         }
 
-        totalAmount = amountBeforeDiscount - discountAmount;
+        double totalAmount = amountBeforeDiscount - discountAmount;
 
+        order.setId(orderId);
         order.setAmountBeforeDiscount(amountBeforeDiscount);
         order.setDiscountAmount(discountAmount);
         order.setTotalAmount(totalAmount);
-        order.setId(orderId);
-
         orderRepository.update(order);
 
-        // удаляю в конце, чтобы исключить вариант когда произойдёт ошибка в оформлении заказа и корзина стерется
+        // уменьшаем количество товара на складе
+        for (CartElement cartElement : cartElements) {
+            Product product = productService.getProduct(cartElement.getProductId());
+            int newQuantity = product.getQuantity() - cartElement.getQuantity();
+            product.setQuantity(newQuantity);
+            product.setUpdatedAt(LocalDateTime.now());
+            productService.updateQuantity(product);
+        }
+
+        // очищаем корзину только после успешного обновления склада
         for (CartElement cartElement : cartElements) {
             cartElementService.deleteProduct(cartElement);
         }
