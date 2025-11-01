@@ -44,4 +44,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProductsLikeName(String name) {
         return productRepository.findAllLikeName(name);
     }
+
+    @Override
+    public void updateQuantity(Product product) {
+        productRepository.update(product);
+    }
 }

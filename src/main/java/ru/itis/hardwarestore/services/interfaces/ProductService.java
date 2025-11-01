@@ -9,4 +9,5 @@ public interface ProductService {
     List<Product> getCategoryProducts(int categoryId);
     Product getProductBySlug(String slug);
     List<Product> getProductsLikeName(String name);
+    void updateQuantity(Product product);
 }
