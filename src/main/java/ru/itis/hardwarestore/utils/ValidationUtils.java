@@ -47,14 +47,17 @@ public class ValidationUtils {
     }
 
     private static void validatePhone(String normalizedPhone, boolean isUpdate) {
-        if (!isUpdate || (isUpdate && normalizedPhone != null)) {
-            if (PHONE_PATTERN.matcher(normalizedPhone).matches()) {
-                if (userRepository.findByPhone(normalizedPhone).isPresent()) {
-                    throw new RegistrationValidateException("The phone is busy");
-                }
-            } else {
-                throw new RegistrationValidateException("Incorrect phone number format");
-            }
+        if (isUpdate && (normalizedPhone == null || normalizedPhone.isEmpty())) {
+            return;
+        }
+        if (normalizedPhone == null || normalizedPhone.isEmpty()) {
+            throw new RegistrationValidateException("Phone number is required");
+        }
+        if (!PHONE_PATTERN.matcher(normalizedPhone).matches()) {
+            throw new RegistrationValidateException("Incorrect phone number format");
+        }
+        if (userRepository.findByPhone(normalizedPhone).isPresent()) {
+            throw new RegistrationValidateException("The phone is busy");
         }
     }
 
