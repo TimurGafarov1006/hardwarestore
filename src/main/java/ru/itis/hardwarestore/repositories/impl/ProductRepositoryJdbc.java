@@ -61,6 +61,7 @@ public class ProductRepositoryJdbc implements ProductRepository {
             statement.setInt(6, product.getQuantity());
             statement.setString(7, product.getImageUrl());
             statement.setObject(8, product.getUpdatedAt(), Types.TIMESTAMP);
+            statement.setInt(9, product.getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
