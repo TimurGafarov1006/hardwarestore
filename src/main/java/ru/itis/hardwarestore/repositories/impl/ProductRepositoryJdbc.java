@@ -179,7 +179,9 @@ public class ProductRepositoryJdbc implements ProductRepository {
                 resultSet.getInt("quantity"),
                 resultSet.getString("image_url"),
                 resultSet.getTimestamp("created_at").toLocalDateTime(),
-                resultSet.getTimestamp("updated_at").toLocalDateTime()
+                resultSet.getTimestamp("updated_at") != null
+                        ? resultSet.getTimestamp("updated_at").toLocalDateTime()
+                        : null
         );
     }
 }

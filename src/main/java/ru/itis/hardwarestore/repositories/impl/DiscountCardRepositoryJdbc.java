@@ -118,7 +118,9 @@ public class DiscountCardRepositoryJdbc implements DiscountCardRepository {
                 CardType.fromId(resultSet.getInt("card_type_id")),
                 CardStatus.valueOf(resultSet.getString("status")),
                 resultSet.getTimestamp("created_at").toLocalDateTime(),
-                resultSet.getTimestamp("updated_at").toLocalDateTime()
+                resultSet.getTimestamp("updated_at") != null
+                        ? resultSet.getTimestamp("updated_at").toLocalDateTime()
+                        : null
         );
     }
 }

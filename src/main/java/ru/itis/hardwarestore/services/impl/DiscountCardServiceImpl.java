@@ -29,7 +29,7 @@ public class DiscountCardServiceImpl implements DiscountCardService {
                     CardType.fromId(1),
                     CardStatus.valueOf("ACTIVE"),
                     LocalDateTime.now(),
-                    LocalDateTime.now()
+                    null
             );
             discountCardRepository.save(discountCard);
         } else {

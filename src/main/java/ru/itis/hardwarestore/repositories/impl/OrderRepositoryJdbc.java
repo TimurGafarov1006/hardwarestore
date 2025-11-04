@@ -110,8 +110,12 @@ public class OrderRepositoryJdbc implements OrderRepository {
                 resultSet.getDouble("discount_amount"),
                 resultSet.getDouble("total_amount"),
                 resultSet.getTimestamp("created_at").toLocalDateTime(),
-                resultSet.getTimestamp("delivered_at") != null ? resultSet.getTimestamp("delivered_at").toLocalDateTime() : null,
-                resultSet.getTimestamp("closed_at") != null ? resultSet.getTimestamp("closed_at").toLocalDateTime() : null
+                resultSet.getTimestamp("delivered_at") != null
+                        ? resultSet.getTimestamp("delivered_at").toLocalDateTime()
+                        : null,
+                resultSet.getTimestamp("closed_at") != null
+                        ? resultSet.getTimestamp("closed_at").toLocalDateTime()
+                        : null
         );
     }
 }

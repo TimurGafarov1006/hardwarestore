@@ -90,7 +90,9 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
                         resultSet.getString("slug"),
                         resultSet.getString("image_url"),
                         resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
+                        resultSet.getTimestamp("updated_at") != null
+                                ? resultSet.getTimestamp("updated_at").toLocalDateTime()
+                                : null
                 );
                 categories.add(category);
             }
@@ -124,7 +126,9 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
                         resultSet.getString("slug"),
                         resultSet.getString("image_url"),
                         resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
+                        resultSet.getTimestamp("updated_at") != null
+                                ? resultSet.getTimestamp("updated_at").toLocalDateTime()
+                                : null
                 );
                 categories.add(category);
             }
@@ -150,7 +154,9 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
                         resultSet.getString("slug"),
                         resultSet.getString("image_url"),
                         resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
+                        resultSet.getTimestamp("updated_at") != null
+                                ? resultSet.getTimestamp("updated_at").toLocalDateTime()
+                                : null
                 );
 
                 return Optional.ofNullable(category);
@@ -179,7 +185,9 @@ public class CategoryRepositoryJdbc implements CategoryRepository {
                         resultSet.getString("slug"),
                         resultSet.getString("image_url"),
                         resultSet.getTimestamp("created_at").toLocalDateTime(),
-                        resultSet.getTimestamp("updated_at").toLocalDateTime()
+                        resultSet.getTimestamp("updated_at") != null
+                                ? resultSet.getTimestamp("updated_at").toLocalDateTime()
+                                : null
                 );
 
                 return Optional.ofNullable(category);

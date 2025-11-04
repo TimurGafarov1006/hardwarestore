@@ -44,7 +44,7 @@ CREATE TABLE categories (
                             slug TEXT NOT NULL ,
                             image_url TEXT NOT NULL ,
                             created_at TIMESTAMP NOT NULL ,
-                            updated_at TIMESTAMP NOT NULL ,
+                            updated_at TIMESTAMP ,
     ---------------------
                             CONSTRAINT categories_id_pk PRIMARY KEY (id) ,
                             CONSTRAINT categories_name_uk UNIQUE (name) ,
@@ -62,7 +62,7 @@ CREATE TABLE products (
                           quantity INT NOT NULL ,
                           image_url TEXT NOT NULL ,
                           created_at TIMESTAMP NOT NULL ,
-                          updated_at TIMESTAMP NOT NULL ,
+                          updated_at TIMESTAMP ,
     ---------------------------------
                           CONSTRAINT products_id_pk PRIMARY KEY (id) ,
                           CONSTRAINT products_name_uk UNIQUE (name) ,
@@ -85,7 +85,7 @@ CREATE TABLE discount_cards (
                                 card_type_id INT NOT NULL ,
                                 status VARCHAR(12) DEFAULT 'INACTIVE',
                                 created_at TIMESTAMP NOT NULL ,
-                                updated_at TIMESTAMP NOT NULL ,
+                                updated_at TIMESTAMP ,
     --------------------------------------
                                 CONSTRAINT discount_cards_id_pk PRIMARY KEY (id),
                                 CONSTRAINT discount_cards_user_id_fk FOREIGN KEY (user_id) REFERENCES users(id),
