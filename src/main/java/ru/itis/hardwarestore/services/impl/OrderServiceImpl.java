@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createOrder(String userId) {
+    public void createOrder(UUID userId) {
         List<CartElement> cartElements = cartElementService.getUserCart(userId);
         if (cartElements.isEmpty()) {
             throw new IllegalStateException("Cannot create order: cart is empty");
@@ -114,7 +114,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getOrders(String userId) {
+    public List<Order> getOrders(UUID userId) {
         return orderRepository.findAllByUserId(userId);
     }
 

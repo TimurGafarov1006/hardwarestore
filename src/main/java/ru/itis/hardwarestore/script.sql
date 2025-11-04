@@ -1,15 +1,15 @@
-DROP TABLE sessions;
-DROP TABLE order_lists;
-DROP TABLE cart_elements;
-DROP TABLE orders;
-DROP TABLE discount_cards;
-DROP TABLE users;
-DROP TABLE card_types;
-DROP TABLE products;
-DROP TABLE categories;
+DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS order_lists;
+DROP TABLE IF EXISTS cart_elements;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS discount_cards;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS card_types;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS categories;
 
 CREATE TABLE users (
-                       id TEXT ,
+                       id UUID ,
                        role VARCHAR(8) NOT NULL ,
                        first_name VARCHAR(25) NOT NULL ,
                        last_name VARCHAR(25) NOT NULL ,
@@ -30,7 +30,7 @@ CREATE TABLE users (
 
 CREATE TABLE sessions (
                           session_id TEXT ,
-                          user_id TEXT NOT NULL ,
+                          user_id UUID NOT NULL ,
                           expire_at TIMESTAMP NOT NULL ,
     ------------------------------
                           CONSTRAINT sessions_sessions_id_pk PRIMARY KEY (session_id),
@@ -80,7 +80,7 @@ CREATE TABLE card_types (
 
 CREATE TABLE discount_cards (
                                 id TEXT ,
-                                user_id TEXT NOT NULL ,
+                                user_id UUID NOT NULL ,
                                 card_no VARCHAR(12) NOT NULL ,
                                 card_type_id INT NOT NULL ,
                                 status VARCHAR(12) DEFAULT 'INACTIVE',
@@ -95,7 +95,7 @@ CREATE TABLE discount_cards (
 
 CREATE TABLE cart_elements (
                                id SERIAL ,
-                               user_id TEXT NOT NULL ,
+                               user_id UUID NOT NULL ,
                                product_id INT NOT NULL ,
                                quantity INT NOT NULL,
     -------------------------
@@ -107,7 +107,7 @@ CREATE TABLE cart_elements (
 
 CREATE TABLE orders (
                         id SERIAL ,
-                        user_id TEXT ,
+                        user_id UUID ,
                         amount_before_discount NUMERIC NOT NULL ,
                         discount_amount NUMERIC NOT NULL ,
                         total_amount NUMERIC NOT NULL ,

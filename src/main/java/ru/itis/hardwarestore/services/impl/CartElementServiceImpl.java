@@ -8,10 +8,7 @@ import ru.itis.hardwarestore.repositories.interfaces.CartElementRepository;
 import ru.itis.hardwarestore.services.interfaces.CartElementService;
 import ru.itis.hardwarestore.services.interfaces.ProductService;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class CartElementServiceImpl implements CartElementService {
     private CartElementRepository cartElementRepository;
@@ -36,7 +33,7 @@ public class CartElementServiceImpl implements CartElementService {
     }
 
     @Override
-    public List<CartElement> getUserCart(String userId) {
+    public List<CartElement> getUserCart(UUID userId) {
         return cartElementRepository.findAllByUserId(userId);
     }
 
@@ -54,7 +51,7 @@ public class CartElementServiceImpl implements CartElementService {
     }
 
     @Override
-    public Map<CartElement, Product> getCartContains(String userId) {
+    public Map<CartElement, Product> getCartContains(UUID userId) {
         Map<CartElement, Product> cart = new HashMap<>();
         for (CartElement cartElement : getUserCart(userId)) {
             cart.put(cartElement, productService.getProduct(cartElement.getProductId()));
@@ -69,7 +66,7 @@ public class CartElementServiceImpl implements CartElementService {
     }
 
     @Override
-    public boolean isProductInCart(String userId, int productId) {
+    public boolean isProductInCart(UUID userId, int productId) {
         Optional<CartElement> cartElementOptional = cartElementRepository.findByUserAndProductId(userId, productId);
         return cartElementOptional.isPresent();
     }

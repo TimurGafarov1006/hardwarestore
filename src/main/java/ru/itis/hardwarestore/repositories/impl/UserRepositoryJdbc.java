@@ -6,10 +6,7 @@ import ru.itis.hardwarestore.repositories.interfaces.UserRepository;
 import ru.itis.hardwarestore.utils.PropertiesUtil;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 
 import static ru.itis.hardwarestore.repositories.queries.UserQueries.*;
 
@@ -35,7 +32,7 @@ public class UserRepositoryJdbc implements UserRepository {
         try (Connection connection = DriverManager.getConnection(url, properties);
              PreparedStatement statement = connection.prepareStatement(SAVE_SQL))
         {
-            statement.setString(1, user.getId());
+            statement.setObject(1, user.getId());
             statement.setString(2, user.getRole().toString());
             statement.setString(3, user.getFirstName());
             statement.setString(4, user.getLastName());
@@ -65,7 +62,7 @@ public class UserRepositoryJdbc implements UserRepository {
             statement.setString(5, editedUser.getPhone());
             statement.setString(6, editedUser.getEmail());
             statement.setObject(7, editedUser.getUpdatedAt(), Types.TIMESTAMP);
-            statement.setString(8, editedUser.getId());
+            statement.setObject(8, editedUser.getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -74,11 +71,11 @@ public class UserRepositoryJdbc implements UserRepository {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(UUID id) {
         try (Connection connection = DriverManager.getConnection(url, properties);
              PreparedStatement statement = connection.prepareStatement(DELETE_SQL))
         {
-            statement.setString(1, id);
+            statement.setObject(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -102,11 +99,11 @@ public class UserRepositoryJdbc implements UserRepository {
     }
 
     @Override
-    public Optional<User> findById(String id) {
+    public Optional<User> findById(UUID id) {
         try (Connection connection = DriverManager.getConnection(url, properties);
              PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_SQL))
         {
-            statement.setString(1, id);
+            statement.setObject(1, id);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) return Optional.ofNullable(toUser(resultSet));
@@ -154,7 +151,7 @@ public class UserRepositoryJdbc implements UserRepository {
 
     private User toUser(ResultSet resultSet) throws SQLException {
         return new User(
-                resultSet.getString("id"),
+                resultSet.getObject("id", UUID.class),
                 UserRole.valueOf(resultSet.getString("role")),
                 resultSet.getString("first_name"),
                 resultSet.getString("last_name"),
@@ -164,7 +161,9 @@ public class UserRepositoryJdbc implements UserRepository {
                 resultSet.getString("email"),
                 resultSet.getDate("birthday") != null ? resultSet.getDate("birthday").toLocalDate() : null,
                 resultSet.getTimestamp("created_at").toLocalDateTime(),
-                resultSet.getTimestamp("updated_at").toLocalDateTime()
+                resultSet.getTimestamp("updated_at") != null
+                        ? resultSet.getTimestamp("updated_at").toLocalDateTime()
+                        : null
         );
     }
 }

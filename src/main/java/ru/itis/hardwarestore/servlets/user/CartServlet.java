@@ -13,6 +13,7 @@ import ru.itis.hardwarestore.utils.JacksonUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.UUID;
 
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
@@ -25,7 +26,7 @@ public class CartServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userId = (String) req.getAttribute("userId");
+        UUID userId = (UUID) req.getAttribute("userId");
         req.setAttribute("cart", cartElementService.getCartContains(userId));
         req.getRequestDispatcher("/WEB-INF/views/user/cart.jsp").forward(req, resp);
     }

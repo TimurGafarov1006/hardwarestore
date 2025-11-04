@@ -7,6 +7,7 @@ import ru.itis.hardwarestore.utils.PropertiesUtil;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.Properties;
+import java.util.UUID;
 
 import static ru.itis.hardwarestore.repositories.queries.SessionQueries.*;
 
@@ -27,12 +28,12 @@ public class SessionRepositoryJdbc implements SessionRepository {
 
 
     @Override
-    public void addSession(String sessionId, String userId, LocalDateTime expireAt) {
+    public void addSession(UUID userId, String sessionId, LocalDateTime expireAt) {
         try (Connection connection = DriverManager.getConnection(url, properties);
              PreparedStatement statement = connection.prepareStatement(SAVE_SQL))
         {
             statement.setString(1, sessionId);
-            statement.setString(2, userId);
+            statement.setObject(2, userId);
             statement.setObject(3, expireAt, Types.TIMESTAMP);
 
             statement.executeUpdate();
@@ -52,7 +53,7 @@ public class SessionRepositoryJdbc implements SessionRepository {
             if (resultSet.next()) {
                 Session session = new Session(
                         resultSet.getString("session_id"),
-                        resultSet.getString("user_id"),
+                        resultSet.getObject("user_id", UUID.class),
                         resultSet.getTimestamp("expire_at").toLocalDateTime()
                 );
                 return session;

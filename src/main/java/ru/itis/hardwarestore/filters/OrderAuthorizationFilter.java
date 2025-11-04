@@ -10,6 +10,7 @@ import ru.itis.hardwarestore.models.Order;
 import ru.itis.hardwarestore.services.interfaces.OrderService;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class OrderAuthorizationFilter extends HttpFilter {
     private OrderService orderService;
@@ -21,7 +22,7 @@ public class OrderAuthorizationFilter extends HttpFilter {
 
     @Override
     public void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        String userId = (String) req.getAttribute("userId");
+        UUID userId = (UUID) req.getAttribute("userId");
         String pathInfo = req.getPathInfo();
         if (pathInfo == null || pathInfo.equals("/") || pathInfo.isEmpty()) {
             chain.doFilter(req, res);

@@ -5,10 +5,7 @@ import ru.itis.hardwarestore.repositories.interfaces.OrderRepository;
 import ru.itis.hardwarestore.utils.PropertiesUtil;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 
 import static ru.itis.hardwarestore.repositories.queries.OrderQueries.*;
 
@@ -32,7 +29,7 @@ public class OrderRepositoryJdbc implements OrderRepository {
         try (Connection connection = DriverManager.getConnection(url, properties);
              PreparedStatement statement = connection.prepareStatement(SAVE_SQL))
         {
-            statement.setString(1, order.getUserId());
+            statement.setObject(1, order.getUserId());
             statement.setDouble(2, order.getAmountBeforeDiscount());
             statement.setDouble(3, order.getDiscountAmount());
             statement.setDouble(4, order.getTotalAmount());
@@ -88,13 +85,13 @@ public class OrderRepositoryJdbc implements OrderRepository {
     }
 
     @Override
-    public List<Order> findAllByUserId(String userId) {
+    public List<Order> findAllByUserId(UUID userId) {
         List<Order> orders = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(url, properties);
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_USER_ID_SQL))
         {
-            statement.setString(1, userId);
+            statement.setObject(1, userId);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) orders.add(toOrder(resultSet));
@@ -108,7 +105,7 @@ public class OrderRepositoryJdbc implements OrderRepository {
     private Order toOrder(ResultSet resultSet) throws SQLException {
         return new Order(
                 resultSet.getInt("id"),
-                resultSet.getString("user_id"),
+                resultSet.getObject("user_id", UUID.class),
                 resultSet.getDouble("amount_before_discount"),
                 resultSet.getDouble("discount_amount"),
                 resultSet.getDouble("total_amount"),

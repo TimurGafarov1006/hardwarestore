@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @ToString
 public class Order {
     private Integer id;
-    private String userId;
+    private UUID userId;
     private double amountBeforeDiscount;
     private double discountAmount;
     private double totalAmount;

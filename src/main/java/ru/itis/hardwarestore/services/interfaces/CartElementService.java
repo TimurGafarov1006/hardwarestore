@@ -5,12 +5,13 @@ import ru.itis.hardwarestore.models.Product;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public interface CartElementService {
     CartElement getCartElement(Integer id);
-    List<CartElement> getUserCart(String userId);
+    List<CartElement> getUserCart(UUID userId);
     void addOrUpdate(CartElement cartElement);
-    Map<CartElement, Product> getCartContains(String userId);
+    Map<CartElement, Product> getCartContains(UUID userId);
     void deleteProduct(CartElement cartElement);
-    boolean isProductInCart(String userId, int productId);
+    boolean isProductInCart(UUID userId, int productId);
 }

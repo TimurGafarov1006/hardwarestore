@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.UUID;
 
 @WebServlet("/cabinet")
 public class CabinetServlet extends HttpServlet {
@@ -25,7 +26,7 @@ public class CabinetServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userId = (String) req.getAttribute("userId");
+        UUID userId = (UUID) req.getAttribute("userId");
         try {
             User user = userService.getUser(userId);
             LocalDate birthday = user.getBirthday();

@@ -6,10 +6,7 @@ import ru.itis.hardwarestore.repositories.interfaces.CartElementRepository;
 import ru.itis.hardwarestore.utils.PropertiesUtil;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 
 import static ru.itis.hardwarestore.repositories.queries.CartElementsQueries.*;
 
@@ -33,7 +30,7 @@ public class CartElementRepositoryJdbc implements CartElementRepository {
         try (Connection connection = DriverManager.getConnection(url, properties);
              PreparedStatement statement = connection.prepareStatement(SAVE_SQL))
         {
-            statement.setString(1, cartElement.getUserId());
+            statement.setObject(1, cartElement.getUserId());
             statement.setInt(2, cartElement.getProductId());
             statement.setInt(3, cartElement.getQuantity());
 
@@ -86,13 +83,13 @@ public class CartElementRepositoryJdbc implements CartElementRepository {
     }
 
     @Override
-    public List<CartElement> findAllByUserId(String userId) {
+    public List<CartElement> findAllByUserId(UUID userId) {
         List<CartElement> cartElements = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(url, properties);
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_USER_ID_SQL))
         {
-            statement.setString(1, userId);
+            statement.setObject(1, userId);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) cartElements.add(toCartElement(resultSet));
@@ -104,11 +101,11 @@ public class CartElementRepositoryJdbc implements CartElementRepository {
     }
 
     @Override
-    public Optional<CartElement> findByUserAndProductId(String userId, int productId) {
+    public Optional<CartElement> findByUserAndProductId(UUID userId, int productId) {
         try (Connection connection = DriverManager.getConnection(url, properties);
              PreparedStatement statement = connection.prepareStatement(FIND_BY_USER_AND_PRODUCT_ID))
         {
-            statement.setString(1, userId);
+            statement.setObject(1, userId);
             statement.setInt(2, productId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -124,7 +121,7 @@ public class CartElementRepositoryJdbc implements CartElementRepository {
     private CartElement toCartElement(ResultSet resultSet) throws SQLException {
         return new CartElement(
                 resultSet.getInt("id"),
-                resultSet.getString("user_id"),
+                resultSet.getObject("user_id", UUID.class),
                 resultSet.getInt("product_id"),
                 resultSet.getInt("quantity")
         );

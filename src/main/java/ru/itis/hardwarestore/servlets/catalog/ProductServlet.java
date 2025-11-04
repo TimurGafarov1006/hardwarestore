@@ -13,6 +13,7 @@ import ru.itis.hardwarestore.services.interfaces.ProductService;
 import ru.itis.hardwarestore.services.interfaces.UserService;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @WebServlet("/products/*")
 public class ProductServlet extends HttpServlet {
@@ -39,7 +40,7 @@ public class ProductServlet extends HttpServlet {
         String productSlug = pathInfo.substring(1).split("/")[0];
         Product product = productService.getProductBySlug(productSlug);
         Category productCategory = categoryService.getCategory(product.getCategoryId());
-        String userId = (String) req.getAttribute("userId");
+        UUID userId = (UUID) req.getAttribute("userId");
 
         req.setAttribute("isProductInCart", cartElementService.isProductInCart(userId, product.getId()));
         req.setAttribute("user", userService.getUser(userId));

@@ -10,6 +10,7 @@ import ru.itis.hardwarestore.utils.PropertiesUtil;
 import java.sql.*;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.UUID;
 
 import static ru.itis.hardwarestore.repositories.queries.DiscountCardQueries.*;
 
@@ -34,7 +35,7 @@ public class DiscountCardRepositoryJdbc implements DiscountCardRepository {
              PreparedStatement statement = connection.prepareStatement(SAVE_SQL))
         {
             statement.setString(1, discountCard.getId());
-            statement.setString(2, discountCard.getUserId());
+            statement.setObject(2, discountCard.getUserId());
             statement.setString(3, discountCard.getCardNo());
             statement.setInt(4, discountCard.getCardType().getId());
             statement.setString(5, discountCard.getCardStatus().getStatus());
@@ -55,7 +56,7 @@ public class DiscountCardRepositoryJdbc implements DiscountCardRepository {
             statement.setInt(1, discountCard.getCardType().getId());
             statement.setString(2, discountCard.getCardStatus().getStatus());
             statement.setObject(3, discountCard.getUpdatedAt(), Types.TIMESTAMP);
-            statement.setString(4, discountCard.getUserId());
+            statement.setObject(4, discountCard.getUserId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -93,11 +94,11 @@ public class DiscountCardRepositoryJdbc implements DiscountCardRepository {
     }
 
     @Override
-    public Optional<DiscountCard> findByUserId(String userId) {
+    public Optional<DiscountCard> findByUserId(UUID userId) {
         try (Connection connection = DriverManager.getConnection(url, properties);
              PreparedStatement statement = connection.prepareStatement(FIND_BY_USER_ID_SQL))
         {
-            statement.setString(1, userId);
+            statement.setObject(1, userId);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) return Optional.ofNullable(toDiscountCard(resultSet));
@@ -110,16 +111,14 @@ public class DiscountCardRepositoryJdbc implements DiscountCardRepository {
     }
 
     private DiscountCard toDiscountCard(ResultSet resultSet) throws SQLException {
-        DiscountCard discountCard = new DiscountCard(
+        return new DiscountCard(
                 resultSet.getString("id"),
-                resultSet.getString("user_id"),
+                resultSet.getObject("user_id", UUID.class),
                 resultSet.getString("card_no"),
                 CardType.fromId(resultSet.getInt("card_type_id")),
                 CardStatus.valueOf(resultSet.getString("status")),
                 resultSet.getTimestamp("created_at").toLocalDateTime(),
                 resultSet.getTimestamp("updated_at").toLocalDateTime()
         );
-
-        return discountCard;
     }
 }

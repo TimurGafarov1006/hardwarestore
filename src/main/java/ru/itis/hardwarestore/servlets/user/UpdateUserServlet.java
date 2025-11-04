@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.UUID;
 
 @WebServlet("/cabinet/update")
 public class UpdateUserServlet extends HttpServlet {
@@ -26,7 +27,7 @@ public class UpdateUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userId = (String) req.getAttribute("userId");
+        UUID userId = (UUID) req.getAttribute("userId");
         try {
             User user = userService.getUser(userId);
             LocalDate birthday = user.getBirthday();
@@ -44,7 +45,7 @@ public class UpdateUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User oldUser = userService.getUser((String) req.getAttribute("userId"));
+        User oldUser = userService.getUser((UUID) req.getAttribute("userId"));
         String firstName = req.getParameter("first_name");
         String lastName = req.getParameter("last_name");
         // если пользак ввел что-то в форму, то будем передавать этот параметр, иначе null

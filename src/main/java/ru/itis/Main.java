@@ -24,10 +24,6 @@ public class Main {
 //        OrderService orderService = new OrderServiceImpl(orderRepository, orderListRepository, cartElementService, productService, discountCardService);
 //        System.out.println(orderService.getOrder(1));
 
-        DiscountCardRepository discountCardRepository = new DiscountCardRepositoryJdbc();
-        DiscountCardService discountCardService = new DiscountCardServiceImpl(discountCardRepository);
-        DiscountCard discountCard = discountCardService.getDiscountCard("317b5e16-5d60-402b-b499-474bc70502f6");
-        discountCardService.upgradeDiscountCard("317b5e16-5d60-402b-b499-474bc70502f6");
-        System.out.println(discountCardService.getDiscountCard("317b5e16-5d60-402b-b499-474bc70502f6"));
+
     }
 }

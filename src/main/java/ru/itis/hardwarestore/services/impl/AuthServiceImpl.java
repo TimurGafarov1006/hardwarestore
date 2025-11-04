@@ -40,7 +40,7 @@ public class AuthServiceImpl implements AuthService {
 
         ValidationUtils.validateUser(firstName, lastName, password, normalizedPhone, email, false);
 
-        String userId = UUID.randomUUID().toString();
+        UUID userId = UUID.randomUUID();
         String salt = UUID.randomUUID().toString();
         String passwordHash = DigestUtils.sha256Hex(password + salt);
 
@@ -55,14 +55,14 @@ public class AuthServiceImpl implements AuthService {
                 email,
                 birthday,
                 LocalDateTime.now(),
-                LocalDateTime.now()
+                null
         );
         userRepository.save(user);
 
         String sessionId = UUID.randomUUID().toString();
         sessionRepository.addSession(
-                sessionId,
                 userId,
+                sessionId,
                 LocalDateTime.now().plus(sessionDuration)
         );
 
@@ -84,8 +84,8 @@ public class AuthServiceImpl implements AuthService {
             if (DigestUtils.sha256Hex(password + salt).equals(userPasswordHash)) {
                 String sessionId = UUID.randomUUID().toString();
                 sessionRepository.addSession(
-                        sessionId,
                         user.getId(),
+                        sessionId,
                         LocalDateTime.now().plus(sessionDuration)
                 );
 

@@ -8,12 +8,13 @@ import ru.itis.hardwarestore.models.enums.UserRole;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
 @ToString
 public class User {
-    private String id;
+    private UUID id;
     private UserRole role;
     private String firstName;
     private String lastName;

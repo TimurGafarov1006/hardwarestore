@@ -20,7 +20,7 @@ public class DiscountCardServiceImpl implements DiscountCardService {
     }
 
     @Override
-    public void openDiscountCard(String userId) {
+    public void openDiscountCard(UUID userId) {
         if (discountCardRepository.findByUserId(userId).isEmpty()) {
             DiscountCard discountCard = new DiscountCard(
                     UUID.randomUUID().toString(),
@@ -38,7 +38,7 @@ public class DiscountCardServiceImpl implements DiscountCardService {
     }
 
     @Override
-    public void upgradeDiscountCard(String userId) {
+    public void upgradeDiscountCard(UUID userId) {
         Optional<DiscountCard> oldDiscountCard = discountCardRepository.findByUserId(userId);
         if (oldDiscountCard.isPresent()) {
             if (oldDiscountCard.get().getCardType().getId() < 3) {
@@ -54,7 +54,7 @@ public class DiscountCardServiceImpl implements DiscountCardService {
     }
 
     @Override
-    public DiscountCard getDiscountCard(String userId) {
+    public DiscountCard getDiscountCard(UUID userId) {
         Optional<DiscountCard> oldDiscountCard = discountCardRepository.findByUserId(userId);
         if (oldDiscountCard.isPresent()) {
             return oldDiscountCard.get();

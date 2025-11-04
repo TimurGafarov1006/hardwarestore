@@ -11,6 +11,7 @@ import ru.itis.hardwarestore.services.interfaces.OrderService;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 
 @WebServlet("/cabinet/orders/*")
 public class OrderServlet extends HttpServlet {
@@ -23,7 +24,7 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userId = (String) req.getAttribute("userId");
+        UUID userId = (UUID) req.getAttribute("userId");
         String pathInfo = req.getPathInfo();
         if (pathInfo == null || pathInfo.equals("/") || pathInfo.isEmpty()) {
             req.setAttribute("orders", orderService.getOrders(userId));
@@ -44,7 +45,7 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userId = (String) req.getAttribute("userId");
+        UUID userId = (UUID) req.getAttribute("userId");
         orderService.createOrder(userId);
         resp.sendRedirect(req.getContextPath() + "/cabinet/orders");
     }

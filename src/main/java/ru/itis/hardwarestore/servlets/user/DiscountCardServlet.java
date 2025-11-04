@@ -10,6 +10,7 @@ import ru.itis.hardwarestore.models.DiscountCard;
 import ru.itis.hardwarestore.services.interfaces.DiscountCardService;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @WebServlet("/cabinet/discount-card")
 public class DiscountCardServlet extends HttpServlet {
@@ -22,7 +23,7 @@ public class DiscountCardServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userId = (String) req.getAttribute("userId");
+        UUID userId = (UUID) req.getAttribute("userId");
         DiscountCard discountCard;
         try {
             discountCard = discountCardService.getDiscountCard(userId);
@@ -36,7 +37,7 @@ public class DiscountCardServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userId = (String) req.getAttribute("userId");
+        UUID userId = (UUID) req.getAttribute("userId");
         discountCardService.openDiscountCard(userId);
 
         resp.sendRedirect(req.getContextPath() + "/cabinet/discount-card");
